@@ -4,4 +4,6 @@ export { ProjectGrid } from './ProjectGrid';
 export { ProjectList } from './ProjectList';
 export { CreateProjectModal } from './CreateProjectModal';
 export { TemplateGallery } from './TemplateGallery';
+export { ProjectCardPreview } from './ProjectCardPreview';
+export { QuickActionsOverlay } from './QuickActionsOverlay';
 

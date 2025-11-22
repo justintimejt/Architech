@@ -16,7 +16,19 @@ export function useChatWithGemini(projectId: string) {
 
   // Load chat history from Supabase when projectId is available
   useEffect(() => {
+    // Clear messages immediately when projectId changes
+    setMessages([]);
+    setIsLoadingHistory(true);
+
     if (!projectId || projectId === 'dummy' || !isSupabaseAvailable() || !supabaseClient) {
+      setIsLoadingHistory(false);
+      return;
+    }
+
+    // Validate that projectId is a UUID (Supabase projects use UUIDs)
+    const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    if (!uuidRegex.test(projectId)) {
+      // Not a valid UUID, so this project doesn't have chat history yet
       setIsLoadingHistory(false);
       return;
     }
@@ -28,6 +40,8 @@ export function useChatWithGemini(projectId: string) {
         if (!supabaseClient) {
           throw new Error("Supabase client not initialized");
         }
+        
+        console.log(`📥 Loading chat history for project: ${projectId}`);
         const { data, error } = await supabaseClient
           .from("chat_messages")
           .select("id, role, content, created_at")
@@ -36,7 +50,7 @@ export function useChatWithGemini(projectId: string) {
           .limit(100); // Load up to 100 messages
 
         if (error) {
-          console.error("Failed to load chat history:", error);
+          console.error("❌ Failed to load chat history:", error);
           if (!cancelled) {
             setIsLoadingHistory(false);
           }
@@ -50,11 +64,15 @@ export function useChatWithGemini(projectId: string) {
             role: msg.role as "user" | "assistant",
             content: msg.content,
           }));
+          console.log(`✅ Loaded ${loadedMessages.length} chat messages for project ${projectId}`);
           setMessages(loadedMessages);
+          setIsLoadingHistory(false);
+        } else if (!cancelled) {
+          console.log(`ℹ️  No chat history found for project ${projectId}`);
           setIsLoadingHistory(false);
         }
       } catch (error) {
-        console.error("Error loading chat history:", error);
+        console.error("❌ Error loading chat history:", error);
         if (!cancelled) {
           setIsLoadingHistory(false);
         }

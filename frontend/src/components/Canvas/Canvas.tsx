@@ -16,6 +16,7 @@ import {
 import '@xyflow/react/dist/style.css';
 import { CustomNode } from '../../nodes/customNodes';
 import { useProjectContext } from '../../contexts/ProjectContext';
+import { useReactFlowContext } from '../../contexts/ReactFlowContext';
 import type { Edge } from '@xyflow/react';
 
 interface CanvasProps {
@@ -29,6 +30,7 @@ const nodeTypes: NodeTypes = {
 
 export function Canvas({ onNodeSelect, selectedNodeId }: CanvasProps) {
   const { nodes: projectNodes, edges: projectEdges, addNode, addEdge, deleteNode, deleteEdge, updateNodePosition } = useProjectContext();
+  const { setReactFlowInstance } = useReactFlowContext();
   const [nodes, setNodes, onNodesChange] = useNodesState<Node>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState<Edge>([]);
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -145,7 +147,8 @@ export function Canvas({ onNodeSelect, selectedNodeId }: CanvasProps) {
 
   const onInit = useCallback((instance: any) => {
     reactFlowInstance.current = instance;
-  }, []);
+    setReactFlowInstance(instance);
+  }, [setReactFlowInstance]);
 
   // Nodes are already in React Flow format with type set
   // Use useEffect to ensure dimensions are set after mount

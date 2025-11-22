@@ -4,7 +4,10 @@ import { useStorage } from '../../hooks/useStorage';
 import { useExport } from '../../hooks/useExport';
 import { supabaseClient, isSupabaseAvailable } from '../../lib/supabaseClient';
 import { getOrCreateSessionId } from '../../lib/session';
-import { getStoredProjects, updateStoredProjectSupabaseId } from '../../utils/storage';
+import { getStoredProjects, updateStoredProjectSupabaseId, updateStoredProjectThumbnail } from '../../utils/storage';
+import { useReactFlowContext } from '../../contexts/ReactFlowContext';
+import { captureCanvasThumbnail } from '../../utils/canvasCapture';
+import { optimizeThumbnail } from '../../utils/thumbnail';
 import { FaSave, FaFolderOpen, FaDownload, FaFileExport, FaTrash } from 'react-icons/fa';
 
 interface ToolbarProps {
@@ -13,6 +16,7 @@ interface ToolbarProps {
 
 export function Toolbar({ projectId }: ToolbarProps) {
   const { getProject, loadProject, clearProject } = useProjectContext();
+  const { reactFlowInstance } = useReactFlowContext();
   const { saveProject, exportToJSON, importFromJSON } = useStorage();
   const { exportAsPNG } = useExport();
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -42,6 +46,27 @@ export function Toolbar({ projectId }: ToolbarProps) {
     try {
       // Save to localStorage - pass projectId to update existing project
       const savedId = saveProject(project, name, currentProjectId || undefined);
+      
+      // Generate thumbnail if React Flow instance is available
+      if (savedId && reactFlowInstance) {
+        try {
+          const thumbnail = await captureCanvasThumbnail(reactFlowInstance, {
+            width: 400,
+            height: 300,
+            quality: 0.8
+          });
+          
+          if (thumbnail) {
+            // Optimize thumbnail to reduce size
+            const optimizedThumbnail = await optimizeThumbnail(thumbnail, 100);
+            // Update stored project with thumbnail
+            updateStoredProjectThumbnail(savedId, optimizedThumbnail);
+          }
+        } catch (error) {
+          console.error('Failed to generate thumbnail:', error);
+          // Don't fail the save if thumbnail generation fails
+        }
+      }
       
       // If Supabase is available, sync to Supabase
       if (savedId && isSupabaseAvailable() && supabaseClient) {
@@ -91,6 +116,11 @@ export function Toolbar({ projectId }: ToolbarProps) {
             } else if (created?.id) {
               // Store the Supabase ID in localStorage
               updateStoredProjectSupabaseId(savedId, created.id);
+              
+              // Dispatch custom event to notify other components
+              window.dispatchEvent(new CustomEvent('projectSupabaseIdUpdated', {
+                detail: { localStorageId: savedId, supabaseId: created.id }
+              }));
             }
           }
         } catch (error) {

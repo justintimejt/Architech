@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, useSearchParams } from 'react-router-dom';
 import { ProjectProvider, useProjectContext } from '../contexts/ProjectContext';
+import { ReactFlowProvider } from '../contexts/ReactFlowContext';
 import { ComponentLibrary } from '../components/SidebarLeft';
 import { Canvas } from '../components/Canvas';
 import { InspectorPanel } from '../components/SidebarRight';
@@ -81,6 +82,55 @@ function CanvasContent() {
     }
   }, [id, loadProject, navigate, hasLoaded]);
 
+  // Watch for updates to the Supabase ID (e.g., when project is saved for the first time)
+  useEffect(() => {
+    if (id && id !== 'new') {
+      const checkSupabaseId = () => {
+        const projects = getStoredProjects();
+        const storedProject = projects.find(p => p.id === id);
+        if (storedProject?.supabaseId && storedProject.supabaseId !== supabaseProjectId) {
+          setSupabaseProjectId(storedProject.supabaseId);
+        }
+      };
+
+      // Check immediately
+      checkSupabaseId();
+
+      // Listen for custom event when Supabase ID is created/updated
+      const handleSupabaseIdUpdate = (e: CustomEvent) => {
+        if (e.detail.localStorageId === id) {
+          setSupabaseProjectId(e.detail.supabaseId);
+        }
+      };
+
+      // Listen for storage changes (works across tabs)
+      const handleStorageChange = (e: StorageEvent) => {
+        if (e.key === 'projects' || !e.key) {
+          checkSupabaseId();
+        }
+      };
+
+      // Check when window regains focus (user might have saved in another tab)
+      const handleFocus = () => {
+        checkSupabaseId();
+      };
+
+      window.addEventListener('projectSupabaseIdUpdated', handleSupabaseIdUpdate as EventListener);
+      window.addEventListener('storage', handleStorageChange);
+      window.addEventListener('focus', handleFocus);
+
+      // Also check periodically (less frequent, every 2 seconds) as fallback
+      const interval = setInterval(checkSupabaseId, 2000);
+
+      return () => {
+        window.removeEventListener('projectSupabaseIdUpdated', handleSupabaseIdUpdate as EventListener);
+        window.removeEventListener('storage', handleStorageChange);
+        window.removeEventListener('focus', handleFocus);
+        clearInterval(interval);
+      };
+    }
+  }, [id, supabaseProjectId]);
+
   // Load project from Supabase when projectId is available (fallback if not in localStorage)
   // This will only load if Supabase is available and we haven't loaded from localStorage
   // Use supabaseProjectId if available, otherwise check if id is a UUID
@@ -133,7 +183,9 @@ function CanvasContent() {
 export function CanvasPage() {
   return (
     <ProjectProvider>
-      <CanvasContent />
+      <ReactFlowProvider>
+        <CanvasContent />
+      </ReactFlowProvider>
     </ProjectProvider>
   );
 }

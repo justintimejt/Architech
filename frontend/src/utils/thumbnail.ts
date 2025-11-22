@@ -1,0 +1,142 @@
+import html2canvas from 'html2canvas';
+import { Project } from '../types';
+
+/**
+ * Generate a thumbnail from a React Flow canvas element
+ */
+export const generateThumbnailFromCanvas = async (
+  canvasElement: HTMLElement,
+  options?: {
+    width?: number;
+    height?: number;
+    quality?: number;
+  }
+): Promise<string> => {
+  const { width = 400, height = 300, quality = 0.8 } = options || {};
+
+  try {
+    const canvas = await html2canvas(canvasElement, {
+      width,
+      height,
+      scale: 1,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false,
+      allowTaint: false
+    });
+
+    // Convert to base64 with specified quality
+    return canvas.toDataURL('image/png', quality);
+  } catch (error) {
+    console.error('Failed to generate thumbnail:', error);
+    throw error;
+  }
+};
+
+/**
+ * Generate a thumbnail from project data (programmatic rendering)
+ * This is a fallback when canvas element is not available
+ */
+export const generateThumbnailFromProject = async (
+  project: Project
+): Promise<string> => {
+  // For now, return a placeholder
+  // In the future, we could render nodes/edges to a canvas programmatically
+  return createPlaceholderThumbnail(project);
+};
+
+/**
+ * Create a placeholder thumbnail when preview is not available
+ */
+export const createPlaceholderThumbnail = (project: Project): string => {
+  // Create a simple canvas with project info
+  const canvas = document.createElement('canvas');
+  canvas.width = 400;
+  canvas.height = 300;
+  const ctx = canvas.getContext('2d');
+  
+  if (!ctx) return '';
+
+  // Background gradient
+  const gradient = ctx.createLinearGradient(0, 0, 400, 300);
+  gradient.addColorStop(0, '#f3f4f6');
+  gradient.addColorStop(1, '#e5e7eb');
+  ctx.fillStyle = gradient;
+  ctx.fillRect(0, 0, 400, 300);
+
+  // Text
+  ctx.fillStyle = '#6b7280';
+  ctx.font = 'bold 24px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(project.name || 'Untitled Project', 200, 120);
+
+  // Node/Edge count
+  ctx.font = '16px sans-serif';
+  ctx.fillText(
+    `${project.nodes?.length || 0} nodes • ${project.edges?.length || 0} edges`,
+    200,
+    160
+  );
+
+  return canvas.toDataURL('image/png');
+};
+
+/**
+ * Optimize thumbnail size by compressing
+ */
+export const optimizeThumbnail = async (
+  dataUrl: string,
+  maxSizeKB: number = 100
+): Promise<string> => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      let width = img.width;
+      let height = img.height;
+      const maxDimension = 400;
+
+      // Resize if needed
+      if (width > maxDimension || height > maxDimension) {
+        const ratio = Math.min(maxDimension / width, maxDimension / height);
+        width = width * ratio;
+        height = height * ratio;
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      if (!ctx) {
+        resolve(dataUrl);
+        return;
+      }
+
+      ctx.drawImage(img, 0, 0, width, height);
+      
+      // Try different quality levels to meet size requirement
+      let quality = 0.8;
+      let result = canvas.toDataURL('image/jpeg', quality);
+      
+      // Check size and reduce quality if needed
+      while (getDataUrlSize(result) > maxSizeKB * 1024 && quality > 0.1) {
+        quality -= 0.1;
+        result = canvas.toDataURL('image/jpeg', quality);
+      }
+      
+      resolve(result);
+    };
+    img.onerror = () => resolve(dataUrl);
+    img.src = dataUrl;
+  });
+};
+
+/**
+ * Get the size of a data URL in bytes
+ */
+const getDataUrlSize = (dataUrl: string): number => {
+  const base64 = dataUrl.split(',')[1];
+  if (!base64) return 0;
+  return (base64.length * 3) / 4;
+};
+

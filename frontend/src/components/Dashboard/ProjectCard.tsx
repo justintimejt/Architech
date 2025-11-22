@@ -1,7 +1,9 @@
 import { useState, useRef, useEffect } from 'react';
 import { StoredProject } from '../../utils/storage';
-import { FaFolder, FaEllipsisV, FaEdit, FaCopy, FaTrash, FaDownload } from 'react-icons/fa';
+import { FaEllipsisV, FaEdit, FaCopy, FaTrash, FaDownload } from 'react-icons/fa';
 import { formatDistanceToNow } from 'date-fns';
+import { ProjectCardPreview } from './ProjectCardPreview';
+import { QuickActionsOverlay } from './QuickActionsOverlay';
 
 interface ProjectCardProps {
   project: StoredProject;
@@ -24,6 +26,7 @@ export function ProjectCard({
   const [isRenaming, setIsRenaming] = useState(false);
   const [newName, setNewName] = useState(project.name);
   const [menuPosition, setMenuPosition] = useState({ top: 0, right: 0 });
+  const [isHovered, setIsHovered] = useState(false);
   const menuButtonRef = useRef<HTMLButtonElement>(null);
 
   const handleRename = () => {
@@ -73,11 +76,34 @@ export function ProjectCard({
   }, [showMenu]);
 
   return (
-    <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow border border-gray-200">
-      <div className="p-4">
+    <div
+      className="bg-white rounded-lg shadow-md hover:shadow-xl transition-all duration-200 border border-gray-200 cursor-pointer group overflow-hidden"
+      onClick={() => onOpen(project.id)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{ transform: isHovered ? 'scale(1.02)' : 'scale(1)' }}
+    >
+      {/* Preview Image Section */}
+      <div className="relative w-full h-48 overflow-hidden bg-gray-100">
+        <ProjectCardPreview
+          thumbnail={project.thumbnail}
+          project={project.project}
+          className="rounded-t-lg"
+        />
+        {/* Quick Actions Overlay on Hover */}
+        {isHovered && (
+          <QuickActionsOverlay
+            onOpen={() => onOpen(project.id)}
+            onDuplicate={handleDuplicate}
+            onDelete={handleDelete}
+          />
+        )}
+      </div>
+
+      {/* Card Content */}
+      <div className="p-5">
         <div className="flex items-start justify-between mb-3">
-          <div className="flex items-center gap-3 flex-1 min-w-0">
-            <FaFolder className="text-blue-500 text-2xl flex-shrink-0" />
+          <div className="flex-1 min-w-0">
             {isRenaming ? (
               <input
                 type="text"
@@ -91,24 +117,32 @@ export function ProjectCard({
                     setIsRenaming(false);
                   }
                 }}
-                className="flex-1 px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onClick={(e) => e.stopPropagation()}
+                className="w-full px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold text-gray-800"
                 autoFocus
               />
             ) : (
               <h3
-                className="font-semibold text-gray-800 truncate cursor-pointer hover:text-blue-600"
-                onClick={() => onOpen(project.id)}
+                className="font-semibold text-gray-800 truncate text-lg mb-1 group-hover:text-blue-600 transition-colors"
                 title={project.name}
+                onClick={(e) => e.stopPropagation()}
               >
                 {project.name}
               </h3>
             )}
+            {project.description && (
+              <p className="text-sm text-gray-600 line-clamp-2 mt-1">{project.description}</p>
+            )}
           </div>
-          <div className="relative z-30">
+          <div className="relative z-30 ml-2">
             <button
               ref={menuButtonRef}
-              onClick={() => setShowMenu(!showMenu)}
-              className="p-1 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowMenu(!showMenu);
+              }}
+              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded transition-colors"
+              title="More options"
             >
               <FaEllipsisV />
             </button>
@@ -116,7 +150,10 @@ export function ProjectCard({
               <>
                 <div
                   className="fixed inset-0 z-40"
-                  onClick={() => setShowMenu(false)}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    setShowMenu(false);
+                  }}
                 />
                 <div
                   className="fixed w-48 bg-white rounded-md shadow-lg z-50 border border-gray-200"
@@ -124,9 +161,11 @@ export function ProjectCard({
                     top: `${menuPosition.top}px`,
                     right: `${menuPosition.right}px`
                   }}
+                  onClick={(e) => e.stopPropagation()}
                 >
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setIsRenaming(true);
                       setShowMenu(false);
                     }}
@@ -136,14 +175,18 @@ export function ProjectCard({
                     Rename
                   </button>
                   <button
-                    onClick={handleDuplicate}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDuplicate();
+                    }}
                     className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
                   >
                     <FaCopy className="text-xs" />
                     Duplicate
                   </button>
                   <button
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       onExport(project.id);
                       setShowMenu(false);
                     }}
@@ -154,7 +197,10 @@ export function ProjectCard({
                   </button>
                   <div className="border-t border-gray-200" />
                   <button
-                    onClick={handleDelete}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDelete();
+                    }}
                     className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
                   >
                     <FaTrash className="text-xs" />
@@ -166,24 +212,23 @@ export function ProjectCard({
           </div>
         </div>
 
-        {project.description && (
-          <p className="text-sm text-gray-600 mb-3 line-clamp-2">{project.description}</p>
-        )}
-
-        <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
-          <span>{project.nodeCount || 0} nodes</span>
+        {/* Metadata */}
+        <div className="flex items-center gap-4 text-xs text-gray-500">
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 bg-blue-500 rounded-full"></span>
+            {project.nodeCount || 0} nodes
+          </span>
           <span>•</span>
-          <span>Updated {formatDistanceToNow(new Date(project.updatedAt), { addSuffix: true })}</span>
+          <span className="flex items-center gap-1">
+            <span className="w-2 h-2 bg-purple-500 rounded-full"></span>
+            {project.edgeCount || 0} edges
+          </span>
+          <span>•</span>
+          <span className="truncate">
+            {formatDistanceToNow(new Date(project.updatedAt), { addSuffix: true })}
+          </span>
         </div>
-
-        <button
-          onClick={() => onOpen(project.id)}
-          className="w-full px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition-colors text-sm font-medium"
-        >
-          Open Project
-        </button>
       </div>
     </div>
   );
 }
-
