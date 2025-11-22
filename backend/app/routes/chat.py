@@ -799,7 +799,7 @@ IMPORTANT:
 
         # 5) Store messages (user + assistant) for history
         try:
-            supabase.table("chat_messages").insert([
+            result = supabase.table("chat_messages").insert([
                 {
                     "project_id": req.projectId,
                     "role": "user",
@@ -811,8 +811,15 @@ IMPORTANT:
                     "content": assistant_message,
                 },
             ]).execute()
+            
+            if result.data:
+                print(f"✅ Successfully saved chat messages for project {req.projectId}")
+            else:
+                print(f"⚠️  Chat messages insert returned no data for project {req.projectId}")
         except Exception as e:
-            print(f"Warning: Failed to save chat history: {e}")
+            print(f"❌ Failed to save chat history for project {req.projectId}: {e}")
+            import traceback
+            print(traceback.format_exc())
             # Don't fail the request if history save fails
 
         # Return both the message and operations

@@ -13,6 +13,7 @@ export interface StoredProject {
   tags?: string[];
   isFavorite?: boolean;
   supabaseId?: string; // UUID from Supabase if synced
+  thumbnail?: string; // Base64 thumbnail image
 }
 
 export const saveProjectToStorage = (project: Project, name?: string, projectId?: string): string => {
@@ -210,6 +211,21 @@ export const updateStoredProjectSupabaseId = (localStorageId: string, supabaseId
     localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
   } catch (error) {
     console.error('Failed to update Supabase ID:', error);
+  }
+};
+
+export const updateStoredProjectThumbnail = (localStorageId: string, thumbnail: string): void => {
+  try {
+    const projects = getStoredProjects();
+    const index = projects.findIndex(p => p.id === localStorageId);
+    if (index === -1) return;
+    
+    projects[index].thumbnail = thumbnail;
+    projects[index].updatedAt = new Date().toISOString();
+    
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(projects));
+  } catch (error) {
+    console.error('Failed to update thumbnail:', error);
   }
 };
 

@@ -27,6 +27,19 @@ export const useProjectActions = () => {
     // If project has a Supabase ID, delete it from Supabase as well
     if (result.supabaseId && isSupabaseAvailable() && supabaseClient) {
       try {
+        // First, delete all chat messages associated with this project
+        const { error: chatError } = await supabaseClient
+          .from("chat_messages")
+          .delete()
+          .eq("project_id", result.supabaseId);
+        
+        if (chatError) {
+          console.error("Failed to delete chat messages from Supabase:", chatError);
+          // Continue with project deletion even if chat deletion fails
+        }
+        
+        // Then delete the project itself (this should also cascade delete chat messages,
+        // but we're being explicit to ensure it happens)
         const { error } = await supabaseClient
           .from("projects")
           .delete()

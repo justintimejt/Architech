@@ -163,7 +163,7 @@ export function DashboardPage() {
       {/* Content */}
       <div className="flex-1 overflow-y-auto">
         {projects.length === 0 ? (
-          <EmptyState />
+          <EmptyState onCreateClick={() => setShowCreateModal(true)} />
         ) : viewMode === 'grid' ? (
           <ProjectGrid
             projects={projects}

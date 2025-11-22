@@ -1,9 +1,10 @@
-import { useNavigate } from 'react-router-dom';
 import { FaFolderOpen, FaPlus } from 'react-icons/fa';
 
-export function EmptyState() {
-  const navigate = useNavigate();
+interface EmptyStateProps {
+  onCreateClick: () => void;
+}
 
+export function EmptyState({ onCreateClick }: EmptyStateProps) {
   return (
     <div className="flex flex-col items-center justify-center h-full py-16 px-4">
       <div className="text-center max-w-md">
@@ -13,7 +14,7 @@ export function EmptyState() {
           Get started by creating your first project. You can start from scratch or use a template.
         </p>
         <button
-          onClick={() => navigate('/project/new')}
+          onClick={onCreateClick}
           className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
         >
           <FaPlus />
