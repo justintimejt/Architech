@@ -27,15 +27,15 @@ export function ComponentItem({ nodeType }: ComponentItemProps) {
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       className={`
-        flex items-center gap-2 p-2 rounded-md border cursor-grab active:cursor-grabbing
-        transition-all hover:shadow-sm
-        ${isDragging ? 'opacity-50 border-blue-400' : 'border-gray-200 bg-white hover:border-gray-300'}
+        flex items-center gap-2.5 px-2.5 py-2 rounded-md border cursor-grab active:cursor-grabbing
+        transition-all
+        ${isDragging ? 'opacity-50 border-blue-400 bg-blue-50' : 'border-gray-200 bg-white hover:border-gray-300 hover:bg-gray-50'}
       `}
     >
-      <div style={{ color: colorValue, fontSize: '1rem', display: 'inline-flex' }}>
+      <div style={{ color: colorValue, fontSize: '0.875rem', display: 'inline-flex' }}>
         <Icon />
       </div>
-      <span className="text-xs font-medium text-gray-700">{nodeType.label}</span>
+      <span className="text-xs font-normal text-gray-600">{nodeType.label}</span>
     </div>
   );
 }

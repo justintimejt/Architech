@@ -10,7 +10,8 @@ import { getStoredProjects, updateStoredProjectSupabaseId, updateStoredProjectTh
 import { useReactFlowContext } from '../../contexts/ReactFlowContext';
 import { captureCanvasThumbnail } from '../../utils/canvasCapture';
 import { optimizeThumbnail } from '../../utils/thumbnail';
-import { FaSave, FaFolderOpen, FaDownload, FaFileExport, FaTrash, FaHome } from 'react-icons/fa';
+import { FaSave, FaFolderOpen, FaDownload, FaFileExport, FaTrash, FaHome, FaChevronDown } from 'react-icons/fa';
+import { Button, ButtonGroup, ButtonGroupSeparator, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui';
 
 interface ToolbarProps {
   projectId?: string | null;
@@ -298,49 +299,64 @@ export function Toolbar({ projectId: toolbarProjectId }: ToolbarProps) {
       
       <div className="w-px h-6 bg-gray-300" />
       
-      <button
-        onClick={handleSave}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
-        title="Save to localStorage"
-      >
-        <FaSave />
-        Save
-      </button>
+      <ButtonGroup aria-label="Project actions">
+        <Button
+          onClick={handleSave}
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-2"
+          title="Save to localStorage"
+        >
+          <FaSave />
+          Save
+        </Button>
 
-      <button
-        onClick={handleImportJSON}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
-        title="Import JSON file"
-      >
-        <FaFolderOpen />
-        Load
-      </button>
+        <Button
+          onClick={handleImportJSON}
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-2"
+          title="Import JSON file"
+        >
+          <FaFolderOpen />
+          Load
+        </Button>
 
-      <input
-        ref={fileInputRef}
-        type="file"
-        accept=".json"
-        onChange={handleFileChange}
-        className="hidden"
-      />
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept=".json"
+          onChange={handleFileChange}
+          className="hidden"
+        />
 
-      <button
-        onClick={handleExportJSON}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 transition-colors"
-        title="Export as JSON"
-      >
-        <FaFileExport />
-        Export JSON
-      </button>
+        <ButtonGroupSeparator orientation="horizontal" />
 
-      <button
-        onClick={handleExportPNG}
-        className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-100 rounded-md hover:bg-blue-200 transition-colors"
-        title="Export as PNG"
-      >
-        <FaDownload />
-        Export PNG
-      </button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+              title="Export project"
+            >
+              <FaDownload />
+              Export
+              <FaChevronDown className="h-3 w-3" />
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem onClick={handleExportJSON} className="flex items-center gap-2 cursor-pointer">
+              <FaFileExport />
+              Export as JSON
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={handleExportPNG} className="flex items-center gap-2 cursor-pointer">
+              <FaDownload />
+              Export as PNG
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </ButtonGroup>
 
       <div className="flex-1" />
 
