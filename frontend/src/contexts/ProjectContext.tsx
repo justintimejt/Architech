@@ -16,6 +16,7 @@ interface ProjectContextType {
   getProject: ReturnType<typeof useProject>['getProject'];
   clearProject: ReturnType<typeof useProject>['clearProject'];
   applyOperations: ReturnType<typeof useProject>['applyOperations'];
+  optimizeLayout: ReturnType<typeof useProject>['optimizeLayout'];
 }
 
 const ProjectContext = createContext<ProjectContextType | undefined>(undefined);

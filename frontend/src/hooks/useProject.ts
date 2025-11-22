@@ -3,6 +3,7 @@ import type { Node, Edge, Project } from '../types';
 import { v4 as uuidv4 } from 'uuid';
 import { PROJECT_VERSION } from '../utils/constants';
 import { getDefaultNodeName } from '../nodes/nodeConfig';
+import { optimizeLayout, type LayoutAlgorithm } from '../utils/layoutAlgorithms';
 
 export const useProject = () => {
   const [nodes, setNodes] = useState<Node[]>([]);
@@ -347,6 +348,20 @@ export const useProject = () => {
     }
   }, [selectedNodeId, calculateNodeLevels]);
 
+  const optimizeLayoutFunction = useCallback((
+    algorithm: LayoutAlgorithm = 'auto',
+    options?: any
+  ) => {
+    const optimizedNodes = optimizeLayout(nodes, edges, algorithm, options);
+    
+    // Update all node positions
+    optimizedNodes.forEach(node => {
+      updateNodePosition(node.id, node.position);
+    });
+    
+    return optimizedNodes;
+  }, [nodes, edges, updateNodePosition]);
+
   return {
     nodes,
     edges,
@@ -361,7 +376,8 @@ export const useProject = () => {
     loadProject,
     getProject,
     clearProject,
-    applyOperations
+    applyOperations,
+    optimizeLayout: optimizeLayoutFunction
   };
 };
 
