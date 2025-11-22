@@ -119,16 +119,17 @@ export function CompactLayoutOptimizer() {
         onClick={() => setShowDropdown(!showDropdown)}
         disabled={isDisabled}
         className="w-8 h-8 flex items-center justify-center 
-                   rounded-md hover:bg-gray-100 transition-colors
+                   rounded-md bg-purple-600 hover:bg-purple-700 
+                   transition-colors shadow-md
                    disabled:opacity-50 disabled:cursor-not-allowed
-                   focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                   focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2"
         title="Optimize Layout"
         aria-label="Optimize Layout"
       >
         {isOptimizing ? (
-          <FaSpinner className="w-4 h-4 text-gray-700 animate-spin" />
+          <FaSpinner className="w-4 h-4 text-white animate-spin" />
         ) : (
-          <FaMagic className="w-4 h-4 text-gray-700" />
+          <FaMagic className="w-4 h-4 text-white" />
         )}
       </button>
 
