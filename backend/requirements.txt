@@ -5,3 +5,13 @@ python-dotenv==1.0.1
 google-generativeai==0.8.3
 importlib-metadata>=6.0.0
 
+# Note: Frontend dependencies are managed in frontend/package.json
+# Recent frontend dependencies added (see frontend/package.json):
+# - class-variance-authority (for shadcn UI components)
+# - clsx (for conditional class names)
+# - tailwind-merge (for merging Tailwind classes)
+# - lucide-react (for icons in shadcn components)
+# - @radix-ui/react-slot (for Button component)
+# - @radix-ui/react-dropdown-menu (for DropdownMenu component)
+# - @types/node (TypeScript types for Node.js)
+
