@@ -10,7 +10,7 @@ import { useProjectId } from '../hooks/useProjectId';
 import { useSupabaseDiagramSync } from '../hooks/useSupabaseDiagramSync';
 import { useLoadProjectFromSupabase } from '../hooks/useLoadProjectFromSupabase';
 import { isSupabaseAvailable } from '../lib/supabaseClient';
-import { loadProjectFromStorage } from '../utils/storage';
+import { loadProjectFromStorage, getStoredProjects } from '../utils/storage';
 import { useTemplates } from '../hooks/useTemplates';
 import { saveProjectToStorage } from '../utils/storage';
 
@@ -38,6 +38,7 @@ function CanvasContent() {
   // Track if we've loaded the project to prevent double-loading
   const [hasLoaded, setHasLoaded] = useState(false);
   const [loadedProjectId, setLoadedProjectId] = useState<string | null>(null);
+  const [supabaseProjectId, setSupabaseProjectId] = useState<string | null>(null);
 
   // Reset hasLoaded when project ID changes
   useEffect(() => {
@@ -60,6 +61,14 @@ function CanvasContent() {
           edges: project.edges || []
         };
         loadProject(projectToLoad);
+        
+        // Get the Supabase ID if available
+        const projects = getStoredProjects();
+        const storedProject = projects.find(p => p.id === id);
+        if (storedProject?.supabaseId) {
+          setSupabaseProjectId(storedProject.supabaseId);
+        }
+        
         setHasLoaded(true);
       } else {
         // Project not found in localStorage
@@ -74,10 +83,15 @@ function CanvasContent() {
 
   // Load project from Supabase when projectId is available (fallback if not in localStorage)
   // This will only load if Supabase is available and we haven't loaded from localStorage
-  useLoadProjectFromSupabase(id && id !== 'new' && !hasLoaded ? id : null);
+  // Use supabaseProjectId if available, otherwise check if id is a UUID
+  useLoadProjectFromSupabase(
+    supabaseProjectId || 
+    (id && id !== 'new' && !hasLoaded && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id) ? id : null)
+  );
 
   // Sync diagram to Supabase (only if Supabase is configured)
-  useSupabaseDiagramSync(id && id !== 'new' ? id : null);
+  // Use supabaseProjectId if available, otherwise use the id if it's a UUID
+  useSupabaseDiagramSync(supabaseProjectId || (id && id !== 'new' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id) ? id : null));
 
   // Show loading only if Supabase is configured and still loading
   const shouldShowLoading = isSupabaseAvailable() && projectIdLoading && id && id !== 'new';
@@ -108,7 +122,7 @@ function CanvasContent() {
           <InspectorPanel selectedNodeId={selectedNodeId} />
         </div>
         <ChatBar 
-          projectId={id && id !== 'new' ? id : projectId}
+          projectId={supabaseProjectId || (id && id !== 'new' && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id) ? id : projectId)}
           leftSidebarCollapsed={leftSidebarCollapsed}
         />
       </div>
