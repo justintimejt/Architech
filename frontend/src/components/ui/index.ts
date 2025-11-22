@@ -9,4 +9,6 @@ export {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from './dropdown-menu';
+export { Textarea } from './textarea';
+export { Avatar, AvatarImage, AvatarFallback } from './avatar';
 
