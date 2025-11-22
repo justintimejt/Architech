@@ -4,6 +4,7 @@ import {
   Background,
   Controls,
   MiniMap,
+  Panel,
   Node,
   useNodesState,
   useEdgesState,
@@ -17,6 +18,7 @@ import '@xyflow/react/dist/style.css';
 import { CustomNode } from '../../nodes/customNodes';
 import { useProjectContext } from '../../contexts/ProjectContext';
 import { useReactFlowContext } from '../../contexts/ReactFlowContext';
+import { LayoutOptimizer } from '../LayoutOptimizer';
 import type { Edge } from '@xyflow/react';
 
 interface CanvasProps {
@@ -191,6 +193,10 @@ export function Canvas({ onNodeSelect, selectedNodeId }: CanvasProps) {
         <Background />
         <Controls />
         <MiniMap />
+        {/* Layout Optimizer - positioned in top-right corner */}
+        <Panel position="top-right" className="m-4">
+          <LayoutOptimizer />
+        </Panel>
       </ReactFlow>
     </div>
   );
