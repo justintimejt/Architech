@@ -1,322 +1,209 @@
-# BuildFlow - Visual System Design Architecture Editor
+# Architech - Visual System Design Architecture Editor
 
 ## Inspiration
 
 We were inspired by the gap between traditional diagramming tools and modern development workflows. Existing tools like Lucidchart and Draw.io are powerful but feel disconnected from how developers actually think about system architecture. We wanted to create something that combines the visual power of Figma with the technical precision needed for system design.
 
-The idea came from our own frustration when trying to quickly sketch out architecture diagrams during design discussions. We needed something that was:
-- Fast and intuitive (no learning curve)
-- Beautiful by default (not just boxes and arrows)
-- AI-powered (because why manually place every component?)
-- Cloud-synced (so we could access our diagrams anywhere)
+The idea came from our own frustration when trying to quickly sketch out architecture diagrams during design discussions. We needed something that was fast and intuitive with no learning curve, beautiful by default rather than just boxes and arrows, AI-powered to avoid manually placing every component, and cloud-synced so we could access our diagrams anywhere.
 
-BuildFlow is our answer: a modern, AI-enhanced visual editor that makes creating stunning architecture diagrams as easy as describing what you want to build.
+This sparked the idea for Architech, our AI-powered visual architecture editor. Developers and architects often face the challenge of creating clear, accurate system diagrams that communicate complex technical concepts. We wanted to reimagine this workflow by combining:
 
-## Features
+AI and natural language processing to understand design intent and automatically generate diagrams.
 
-### 🎨 Interactive Canvas
-- **Zoomable & Pannable** - Smooth, infinite canvas for large system designs
-- **Drag & Drop** - Intuitive component placement from sidebar
-- **Real-time Editing** - Instant visual feedback as you build
+Interactive canvas for intuitive visual editing and real-time collaboration.
 
-### 📦 Component Library
-- **12 Predefined Components** - Web Server, Database, Cache, Queue, Load Balancer, CDN, and more
-- **Customizable Properties** - Edit names, descriptions, and metadata through inspector panel
-- **Visual Icons** - Each component type has a distinct, recognizable icon
+Data-driven insights grounded in system architecture best practices and component relationships.
 
-### 🔗 Connection System
-- **Smart Connections** - Click and drag to create edges between nodes
-- **Visual Flow** - Animated edges show data flow direction
-- **Connection Handles** - Intuitive connection points on each component
+Live visualization to monitor system complexity and component interactions in real time.
 
-### 🤖 AI Chat Assistant (Archie)
-- **Natural Language Interface** - Describe what you want, Luna builds it
-- **Context-Aware** - Understands your entire diagram structure
-- **Smart Modifications** - Add nodes, create connections, update properties, all through chat
-- **Powered by Google Gemini** - Leverages cutting-edge AI for intelligent diagram generation
+Template system to instantly start from proven architecture patterns.
 
-### 💾 Cloud Sync & Persistence
-- **Supabase Integration** - Automatic cloud sync of all projects
-- **Offline Support** - localStorage fallback for offline work
-- **Project Management** - Dashboard to view, organize, and manage multiple projects
-- **Real-time Updates** - Changes sync across devices
+Our inspiration came from observing how developers juggle complex, and sometimes conflicting, factors such as scalability, performance, security, and cost when designing systems. By building Architech, we aimed to show how modern AI and intuitive visual design can turn this complexity into actionable diagrams, enabling smarter, faster, and more confident architecture decisions.
 
-### 📊 Project Dashboard
-- **Grid & List Views** - Toggle between visual cards and compact list
-- **Project Thumbnails** - Visual previews of your diagrams
-- **Quick Actions** - Open, duplicate, rename, delete, and export projects
-- **Search & Sort** - Find projects quickly by name or date
+## What it does
 
-### 📤 Export Capabilities
-- **PNG Export** - High-quality image export for presentations
-- **JSON Export** - Backup and share project files
-- **Template System** - Start from pre-built architecture templates
+Architech is an AI-powered visual editor designed to make system architecture design smarter, faster, and more accessible. It transforms design ideas into actionable diagrams and visualizations that help developers and architects focus on what matters most.
 
-### 🎯 User Experience
-- **Dark Theme** - Beautiful, modern interface with glassmorphism effects
-- **Responsive Design** - Works seamlessly on desktop and tablet
-- **Keyboard Shortcuts** - Power user features for efficiency
-- **Undo/Redo** - Full history support for safe experimentation
+With Architech, users can:
+
+Create diagrams naturally: Describe what you want to build in plain English, and Archie, our AI assistant, generates the diagram structure automatically.
+
+Understand the architecture: Access a detailed view of component relationships, data flows, and system interactions through an interactive canvas.
+
+Take action with confidence: Build, modify, and refine diagrams through both visual editing and natural language commands, supported by clear AI explanations.
+
+Train the AI: Provide feedback through chat interactions that help improve Archie's understanding of your design patterns and preferences.
+
+Visualize systems: Explore an interactive canvas showing component relationships, alongside dynamic views of system complexity and live tracking of diagram changes.
+
+Chat with AI: Engage in two-way conversations with Archie at the diagram level, enabling users to ask questions, receive clarifications, and co-design architectures with contextual awareness.
+
+Together, these features make Architech a one-stop platform for turning architecture complexity into clarity.
 
 ## How we built it
 
-### Architecture Overview
-BuildFlow is built as a **monorepo** with a clear separation between frontend and backend:
+We built Architech as a full-stack application combining a modern web framework, AI services, and scalable cloud infrastructure to deliver real-time diagram editing and AI assistance to users.
 
-**Frontend Stack:**
-- **React 18** with TypeScript for type-safe UI development
-- **Vite** for lightning-fast development and optimized builds
-- **React Flow** (@xyflow/react) as the core diagramming engine
-- **TailwindCSS** for modern, responsive styling
-- **Supabase JS** for client-side database operations
-- **React Router** for seamless navigation
+Frontend & Deployment
 
-**Backend Stack:**
-- **FastAPI** (Python) for high-performance API endpoints
-- **Supabase Python Client** for server-side database operations
-- **Google Gemini API** for AI-powered chat functionality
-- **Uvicorn** as the ASGI server
+Built using React 18 with TypeScript and Vite, deployed on Vercel for fast, serverless performance and seamless CI/CD. Used React Flow as the core diagramming engine to handle complex graph visualizations with zoom, pan, and node manipulation capabilities.
 
-### Development Process
+Used TailwindCSS and custom components to design a clean, consistent, and responsive interface with minimal overhead, enabling rapid iteration of canvas views, dashboards, and interactive elements.
 
-**Phase 1: Core Canvas (MVP)**
-We started with a pure frontend application focused on the essential diagramming experience:
-- Implemented React Flow canvas with zoom/pan
-- Built component library with drag-and-drop
-- Created connection system for edges
-- Added inspector panel for node configuration
-- Implemented localStorage persistence
+Integrated Supabase Auth for secure authentication with Google OAuth, ensuring users have personalized access to their own projects and preferences.
 
-**Phase 2: Backend Integration**
-We evolved the architecture to support cloud sync and AI features:
-- Set up FastAPI backend with Supabase integration
-- Created database schema for projects and chat messages
-- Implemented project sync hooks for real-time updates
-- Built session management for anonymous users
+Data Layer & Processing
 
-**Phase 3: AI Chat Assistant**
-The most exciting feature - natural language diagram editing:
-- Integrated Google Gemini API via FastAPI backend
-- Built context-aware chat system that loads diagram state
-- Implemented JSON operation parsing for diagram modifications
-- Created chat history persistence in Supabase
+Structured project data (nodes, edges, positions, metadata) and stored it in Supabase PostgreSQL database, where we enriched the raw data with:
 
-**Phase 4: Project Dashboard**
-Transformed from single-project to multi-project system:
-- Built dashboard with grid/list view toggle
-- Implemented project management (create, delete, duplicate, rename)
-- Added search and sorting capabilities
-- Created template gallery for quick starts
+Component relationships and connection metadata.
 
-**Phase 5: Polish & UX**
-Final touches for production readiness:
-- Implemented authentication with Supabase Auth (Google OAuth)
-- Added user profiles and welcome messages
-- Created beautiful landing page
-- Optimized performance and added loading states
-- Integrated Vercel Analytics
+Live tracking metrics for diagram changes over time.
 
-### Key Technical Decisions
+Aggregated project-level analytics for dashboard views.
 
-1. **React Flow over Custom Canvas** - We chose React Flow for its battle-tested diagramming capabilities and active community
-2. **Supabase over Custom Backend** - Supabase gave us instant auth, database, and real-time capabilities without building from scratch
-3. **FastAPI for Backend** - Python's async capabilities and FastAPI's performance made it perfect for AI integration
-4. **Monorepo Structure** - Keeps frontend and backend in sync and simplifies deployment
-5. **TypeScript Everywhere** - Type safety caught countless bugs before they reached production
+Stored enriched data in a format optimized for visualization and AI query workloads.
+
+AI & Insights Engine
+
+Used Google Gemini's LLMs with a context-aware chat pipeline:
+
+Loaded current diagram state and component relationships into AI context.
+
+Enabled the AI to understand diagram structure and generate appropriate modifications based on natural language commands.
+
+Implemented structured response parsing to convert AI suggestions into executable diagram operations (add node, create edge, update properties).
+
+Added a context-aware AI chatbot that works at the diagram level, enabling users to have two-way conversations with the AI about specific architecture decisions and modifications.
+
+Storage & State Management
+
+All application state, including user projects, diagram data, chat history, and user preferences, is persisted in Supabase PostgreSQL, giving us reliable data persistence with real-time sync capabilities.
+
+This persistence enables users to pick up where they left off, track past designs, and build a living history of their architecture evolution.
+
+Visualizations & Analytics
+
+Leveraged React Flow and custom React components to build:
+
+Interactive canvas with zoomable, pannable views of system architectures.
+
+Component library with drag-and-drop placement of system components.
+
+Real-time visual feedback as diagrams are modified.
+
+Designed the interface to surface both macro insights (system-wide architecture patterns) and micro insights (component-by-component details).
+
+In short, Architech integrates a modern web stack with AI-driven insights, natural language processing, and powerful visualizations; all aimed at making architecture design decisions smarter and more transparent.
 
 ## Challenges we ran into
 
-### 1. React Flow State Management
-**Challenge:** Managing complex diagram state (nodes, edges, positions) while keeping React Flow in sync with our data model.
+Domain Understanding
 
-**Solution:** Created a custom `ProjectContext` that wraps React Flow's state management, providing a clean API for our components while maintaining React Flow's internal optimizations.
+System architecture and diagramming were familiar domains, but translating natural language into structured diagram operations was challenging. We struggled to understand how to parse user intent and convert it into precise node placements, edge connections, and component configurations. It took deliberate effort to design prompts and parsing logic that could handle the variety of ways users describe architectures. Once we built that context, we could design features that truly aligned with how developers think about system design.
 
-### 2. AI Context Window Limitations
-**Challenge:** Gemini has token limits, and large diagrams could exceed context windows when sending full diagram state.
+State Management Complexity
 
-**Solution:** Implemented smart context compression - we send only essential node/edge data, exclude visual positioning details, and maintain a sliding window of recent chat history rather than full conversation.
+Managing complex diagram state across React Flow's internal state, our application state, and Supabase persistence was challenging. We had to coordinate between multiple state sources while maintaining performance and data consistency. We learned to:
 
-### 3. Real-time Sync Conflicts
-**Challenge:** Multiple tabs or devices editing the same project could cause conflicts and data loss.
+Establish clear data flow patterns from user actions to state updates to persistence.
 
-**Solution:** Implemented optimistic updates with conflict resolution. We use Supabase's `updated_at` timestamps to detect conflicts and merge changes intelligently, with localStorage as a backup.
+Implement optimistic updates with rollback capabilities for better perceived performance.
 
-### 4. Performance with Large Diagrams
-**Challenge:** Diagrams with 100+ nodes could cause lag during drag operations and rendering.
+Create abstraction layers that separate React Flow's state management from our business logic.
 
-**Solution:** 
-- Implemented virtual scrolling for component library
-- Added debouncing for auto-save operations
-- Optimized React Flow rendering with `useMemo` and `useCallback`
-- Lazy-loaded project thumbnails in dashboard
+This improved our application reliability and reduced state synchronization bugs.
 
-### 5. Authentication Flow Complexity
-**Challenge:** Supporting both authenticated users (Supabase) and anonymous users (localStorage) while maintaining data consistency.
+AI Model Integration
 
-**Solution:** Created a graceful degradation system - the app works fully offline with localStorage, but seamlessly upgrades to cloud sync when users authenticate. Projects can be migrated from anonymous to authenticated accounts.
+We wanted our AI to do more than simple pattern matching. Designing the natural language to diagram operations pipeline was challenging, especially ensuring reliable parsing of AI responses. We had to:
 
-### 6. AI Response Parsing
-**Challenge:** Gemini returns natural language, but we need structured JSON operations to modify diagrams.
+Define structured operation formats that the AI could reliably generate.
 
-**Solution:** Built a robust parsing system that:
-- Uses structured prompts to guide Gemini's responses
-- Implements fallback parsing for edge cases
-- Validates operations before applying to diagram
-- Provides user feedback when parsing fails
+Balance flexibility (allowing various user phrasings) with precision (ensuring correct diagram modifications).
+
+Build robust error handling and fallback mechanisms when AI responses were malformed.
+
+This gave us a crash course in prompt engineering and structured AI output design.
+
+Cloud Infrastructure
+
+We chose Supabase for storing project data, user authentication, and chat history because of its ease of use and real-time capabilities. But setting it up securely was non-trivial. Challenges included:
+
+Configuring Row Level Security policies to protect user data.
+
+Ensuring smooth integration with our React frontend and FastAPI backend.
+
+Handling authentication flows and session management across frontend and backend.
+
+Visualization & Real-Time Performance
+
+Designing meaningful canvas interactions, component placement, and live diagram updates presented both technical and design hurdles. We had to map user actions into visual changes that felt immediate and responsive. Optimizing rendering performance for large diagrams with many nodes while keeping the UI responsive was a balancing act.
+
+Despite these hurdles, each challenge became an opportunity: we learned new patterns for state management, tightened our AI integration, pushed our visualization skills, and deployed a secure, scalable cloud app.
 
 ## Accomplishments that we're proud of
 
-### 🎯 **AI-Powered Natural Language Editing**
-We're particularly proud of Luna, our AI chat assistant. Being able to say "Add a Redis cache between the API and database" and watch it happen is magical. This feature alone sets BuildFlow apart from traditional diagramming tools.
+Timely Delivery
 
-### 🚀 **Seamless Cloud Sync**
-The transition from localStorage to Supabase was invisible to users. Projects sync automatically, work offline, and can be accessed from any device. The graceful degradation (offline-first) means the app never breaks, even without internet.
+We successfully built and delivered a working product that stayed aligned with our vision while going beyond the basics with AI chat, cloud sync, project management, and template system.
 
-### 🎨 **Beautiful, Modern UI**
-We spent significant time on the user experience. The dark theme with glassmorphism effects, smooth animations, and intuitive interactions make BuildFlow feel like a premium product, not a side project.
+Adopting New Technologies
 
-### 📊 **Project Dashboard**
-Transforming from a single-project editor to a full project management system was a major milestone. The dashboard with thumbnails, search, and multiple views makes BuildFlow feel like a complete product.
+Our team dove into new tools and frameworks: Google Gemini AI, Supabase, React Flow, FastAPI, and Vite; and integrated them into a production-ready application. This rapid learning curve not only expanded our technical toolkit but also boosted our confidence in quickly mastering unfamiliar technologies.
 
-### ⚡ **Performance**
-Despite the complexity, BuildFlow remains fast and responsive. Large diagrams with 50+ nodes still feel smooth, thanks to careful optimization and React Flow's efficient rendering.
+AI Model Exploration
 
-### 🔒 **Robust Architecture**
-The monorepo structure, TypeScript throughout, and clean separation of concerns make the codebase maintainable and extensible. We can add new features without breaking existing functionality.
+We researched and implemented natural language to diagram operations, applying it to real-world architecture design. Our system demonstrated how users could describe architectures in plain English and watch them come to life as interactive diagrams.
 
-### 🌐 **Production Ready**
-From authentication to analytics, BuildFlow has all the features needed for production use. It's not just a demo - it's a real, usable product.
+Visual Storytelling
+
+We built intuitive canvas interactions, component libraries, and diagram views that made abstract concepts like system architecture immediately understandable. Seeing complex technical designs come alive visually was one of our proudest achievements.
+
+Seamless User Experience
+
+The transition from local storage to cloud sync was invisible to users. Projects sync automatically, work offline with graceful degradation, and can be accessed from any device. The offline-first architecture means the app never breaks, even without internet.
 
 ## What we learned
 
-### Technical Learnings
+Improved Technical Skills
 
-**React Flow Deep Dive:**
-- Learned the intricacies of managing complex graph state
-- Discovered performance optimization techniques for large diagrams
-- Understood the importance of controlled vs uncontrolled components in React Flow
+Working on this project taught us the importance of understanding both frontend and backend architecture. We learned to coordinate state management, API design, and database schemas to create a cohesive user experience.
 
-**AI Integration:**
-- Gained experience with prompt engineering for structured outputs
-- Learned to handle AI API rate limits and error cases gracefully
-- Discovered the importance of context compression for large data structures
+Technical Growth
 
-**Supabase Mastery:**
-- Learned Row Level Security (RLS) policies for data protection
-- Understood the nuances of real-time subscriptions vs polling
-- Gained experience with Supabase Auth and OAuth flows
+We deepened our knowledge of:
 
-**State Management:**
-- Learned when to use Context API vs local state
-- Discovered patterns for optimistic updates and conflict resolution
-- Understood the importance of single source of truth in complex UIs
+Building natural language interfaces with Google Gemini.
 
-### Product Learnings
+Designing secure and scalable systems with Supabase.
 
-**User Experience:**
-- Simple, intuitive interfaces beat feature-rich but complex ones
-- Visual feedback is crucial - users need to see their actions immediately
-- Offline-first architecture dramatically improves perceived performance
+Implementing complex state management in React applications.
 
-**AI Features:**
-- Natural language interfaces need clear boundaries - users need to understand what AI can and can't do
-- Context is everything - AI needs full diagram state to be useful
-- Error handling for AI features is critical - when AI fails, users need clear feedback
+Deploying production-ready applications with Vercel and cloud platforms.
 
-**Development Process:**
-- Starting with MVP and iterating was the right approach
-- TypeScript caught countless bugs before they reached users
-- Monorepo structure simplified deployment but required careful dependency management
+Industry Insight
 
-### Team Learnings
+We gained valuable exposure to system architecture and diagramming tools. By working with component relationships, data flows, and system patterns, we developed a clearer picture of how developers and architects think about system design and why tools like Architech can make a real impact.
 
-**Scope Management:**
-- Feature creep is real - we had to constantly remind ourselves to focus on core value
-- Sometimes the best feature is the one you don't build
-- User feedback (even from ourselves) was invaluable for prioritization
+Development Process
 
-**Technical Debt:**
-- Some shortcuts we took early on came back to bite us
-- Refactoring is easier when you have TypeScript and good tests
-- Documentation (like this devpost!) helps future you understand past decisions
+Perhaps most importantly, we learned how to take a vision and turn it into a polished, end-to-end solution that blends AI, cloud infrastructure, and UX in a way that solves real-world problems.
 
 ## What's next for Architech
 
-### Short-term (Next 1-2 Months)
+We see Architech not just as a project, but as the foundation of a scalable architecture design platform. Our next steps include:
 
-**Enhanced AI Capabilities:**
-- Multi-step operations: "Create a microservices architecture with 5 services, a load balancer, and a shared database"
-- Diagram analysis: "What are the bottlenecks in this architecture?"
-- Smart suggestions: AI recommends components based on what you've already added
+Deeper AI Integration: Expand beyond basic natural language commands by exploring more sophisticated understanding of architecture patterns, automatic layout suggestions, and intelligent component recommendations based on best practices.
 
-**Collaboration Features:**
-- Real-time collaborative editing (multiple users on same diagram)
-- Comments and annotations on diagrams
-- Share links for view-only access
+Real-Time Collaboration: Integrate real-time collaborative editing so multiple team members can work on the same diagram simultaneously, with live cursors, comments, and change tracking.
 
-**Export Improvements:**
-- PDF export with multiple pages
-- SVG export for vector graphics
-- Export to popular formats (Mermaid, PlantUML, etc.)
+Explainability at Scale: Enhance the AI explanations with richer visual cues (confidence indicators, alternative suggestions, and reasoning breakdowns) so users can trust not just the results, but the AI's decision-making process.
 
-### Medium-term (3-6 Months)
+Advanced Diagramming: Add features for complex architectures such as layers, grouping, sub-diagrams, and multi-page views to support enterprise-scale system designs.
 
-**Template Marketplace:**
-- Community-contributed architecture templates
-- Industry-specific templates (e-commerce, SaaS, microservices, etc.)
-- Template versioning and updates
+Integration Ecosystem: Move beyond standalone diagrams by integrating with popular tools such as GitHub (linking diagrams to code), infrastructure as code generators (Terraform, CloudFormation), and documentation platforms.
 
-**Advanced Diagramming:**
-- Custom component types (user-defined shapes and icons)
-- Layers and grouping for complex diagrams
-- Diagram validation (check for common architecture anti-patterns)
+Production-Grade Infrastructure: Enhance the current Supabase setup with more robust monitoring, audit trails, and enterprise-grade security, making it deployable in real-world development teams.
 
-**Integration Ecosystem:**
-- Import from other tools (Lucidchart, Draw.io, etc.)
-- Export to infrastructure as code (Terraform, CloudFormation)
-- GitHub integration (store diagrams in repos, link to code)
-
-**Performance & Scale:**
-- Support for diagrams with 500+ nodes
-- Incremental loading for large projects
-- Advanced caching strategies
-
-### Long-term Vision (6+ Months)
-
-**AI Architecture Advisor:**
-- Real-time architecture recommendations as you build
-- Cost estimation based on diagram components
-- Security and compliance checking
-- Performance bottleneck detection
-
-**Enterprise Features:**
-- Team workspaces and permissions
-- Audit logs and version history
-- SSO integration
-- Custom branding
-
-**Mobile App:**
-- Native iOS and Android apps
-- Touch-optimized interface
-- Offline-first architecture
-
-**API & Platform:**
-- Public API for programmatic diagram creation
-- Embeddable diagram viewer
-- Webhook integrations
-- Plugin system for extensibility
-
-### The Big Picture
-
-Our vision is to make BuildFlow the go-to tool for system architecture design. We want it to be:
-- **The fastest way** to create architecture diagrams
-- **The most beautiful** output (presentation-ready by default)
-- **The smartest** tool (AI that actually helps, not just a gimmick)
-- **The most collaborative** platform (real-time editing, comments, sharing)
-
-We're building BuildFlow not just as a diagramming tool, but as a platform for thinking about and communicating system architecture. Every feature we add moves us closer to that vision.
-
----
-
-**Built with ❤️ using React, TypeScript, FastAPI, Supabase, and Google Gemini**
-
+By continuing to evolve Architech, we aim to transform it into a trusted partner for developers and architects; combining the precision of AI, the clarity of visualization, and the flexibility of natural language interaction.

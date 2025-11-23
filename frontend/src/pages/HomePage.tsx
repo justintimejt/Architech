@@ -2,8 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import { DotScreenShader } from '@/components/ui/dot-shader-background';
 import { Button } from '@/components/ui/button';
 import { 
-  ChevronDown,
-  Play
+  ChevronDown
 } from 'lucide-react';
 import { FaProjectDiagram } from 'react-icons/fa';
 
@@ -89,29 +88,15 @@ export function HomePage() {
         <div className="max-w-6xl mx-auto">
           {/* Video Container */}
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black mb-12">
-            <div className="aspect-video bg-black flex items-center justify-center">
-              {/* Placeholder for video - replace with actual video embed */}
-              <div className="text-center">
-                <div className="w-24 h-24 bg-white/10 border border-white/20 rounded-full flex items-center justify-center mx-auto mb-6 hover:bg-white/20 transition-colors cursor-pointer">
-                  <Play className="w-12 h-12 text-white ml-2" fill="white" />
-                </div>
-                <p className="text-white/70 text-lg">Video demonstration coming soon</p>
-                <p className="text-white/50 text-sm mt-2">
-                  Replace this placeholder with your video embed (YouTube, Vimeo, etc.)
-                </p>
-              </div>
-              
-              {/* Example: Uncomment and use this for YouTube embed */}
-              {/* 
+            <div className="aspect-video bg-black">
               <iframe
                 className="w-full h-full"
-                src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+                src="https://www.youtube.com/embed/v86YGnCLm-M?autoplay=1&mute=1&loop=1&playlist=v86YGnCLm-M"
                 title="Architech Demo"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
               ></iframe>
-              */}
             </div>
           </div>
 
