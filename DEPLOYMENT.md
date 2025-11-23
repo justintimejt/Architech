@@ -67,3 +67,4 @@ Before deploying to Vercel, ensure:
 - `frontend/vercel.json` - Vercel configuration
 - `archcoach-vercel-deploy-prompt.md` - Detailed deployment instructions
 
+
