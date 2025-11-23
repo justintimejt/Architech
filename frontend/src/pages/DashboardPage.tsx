@@ -39,6 +39,7 @@ export function DashboardPage() {
   const { openProject, deleteProject, duplicate, renameProject, downloadProject } = useProjectActions();
   const { createProjectFromTemplate } = useTemplates();
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -145,7 +146,7 @@ export function DashboardPage() {
           </button>
         </div>
         
-        {/* Welcome Message and Create Button */}
+        {/* Welcome Message and Controls */}
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-3xl font-light tracking-tight text-white">
@@ -155,36 +156,50 @@ export function DashboardPage() {
               Create and manage your architecture diagrams
             </p>
           </div>
-          <button
-            onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-200 font-light tracking-tight shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-          >
-            <FaPlus />
-            New Project
-          </button>
-        </div>
-      </header>
-
-      {/* Toolbar */}
-      {allProjects.length > 0 && (
-        <div className="bg-black/0 border-b border-white/10 px-6 py-3 relative z-10 backdrop-blur-sm">
-          <div className="flex items-center justify-between">
-            {/* Search */}
-            <div className="flex-1 max-w-md">
-              <div className="relative">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 z-10" />
-                <Input
-                  type="text"
-                  placeholder="Search projects..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/50 focus:border-white/20"
-                />
+          <div className="flex items-center gap-3">
+            {/* Expandable Search Button */}
+            <div className="relative flex items-center justify-end">
+              <div className="relative flex items-center">
+                {/* Search Input - expands from right to left */}
+                <div className={`relative transition-all duration-300 ease-in-out overflow-hidden ${isSearchExpanded ? 'w-[300px] opacity-100' : 'w-0 opacity-0'}`}>
+                  <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 z-10" />
+                  <Input
+                    type="text"
+                    placeholder="Search projects..."
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onBlur={() => {
+                      if (!searchQuery) {
+                        setIsSearchExpanded(false);
+                      }
+                    }}
+                    className="pl-10 pr-10 bg-white/5 border-white/10 text-white placeholder:text-white/50 focus:border-white/20"
+                    autoFocus={isSearchExpanded}
+                  />
+                  <button
+                    onClick={() => {
+                      setSearchQuery('');
+                      setIsSearchExpanded(false);
+                    }}
+                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 hover:text-white transition-colors text-xl leading-none"
+                  >
+                    ×
+                  </button>
+                </div>
+                {/* Search Button - shows when collapsed */}
+                {!isSearchExpanded && (
+                  <button
+                    onClick={() => setIsSearchExpanded(true)}
+                    className="flex items-center gap-2 px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200"
+                  >
+                    <FaSearch />
+                  </button>
+                )}
               </div>
             </div>
 
-            {/* View Toggle & Sort */}
-            <div className="flex items-center gap-4">
+            {/* View Toggle Buttons */}
+            {allProjects.length > 0 && (
               <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
@@ -203,112 +218,126 @@ export function DashboardPage() {
                   <FaList />
                 </button>
               </div>
+            )}
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <button className="flex items-center gap-2 px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20">
-                    <span className="text-sm font-medium">
-                      {sortBy === 'modified' && sortOrder === 'desc' && 'Last Modified (Newest)'}
-                      {sortBy === 'modified' && sortOrder === 'asc' && 'Last Modified (Oldest)'}
-                      {sortBy === 'created' && sortOrder === 'desc' && 'Created (Newest)'}
-                      {sortBy === 'created' && sortOrder === 'asc' && 'Created (Oldest)'}
-                      {sortBy === 'name' && sortOrder === 'asc' && 'Name (A-Z)'}
-                      {sortBy === 'name' && sortOrder === 'desc' && 'Name (Z-A)'}
-                    </span>
-                    <ChevronDown className="w-4 h-4 text-white/70" />
-                  </button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align="end"
-                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-2xl min-w-[200px] p-1"
-                >
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setSortBy('modified');
-                      setSortOrder('desc');
-                    }}
-                    className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
-                      sortBy === 'modified' && sortOrder === 'desc'
-                        ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    Last Modified (Newest)
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setSortBy('modified');
-                      setSortOrder('asc');
-                    }}
-                    className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
-                      sortBy === 'modified' && sortOrder === 'asc'
-                        ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    Last Modified (Oldest)
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setSortBy('created');
-                      setSortOrder('desc');
-                    }}
-                    className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
-                      sortBy === 'created' && sortOrder === 'desc'
-                        ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    Created (Newest)
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setSortBy('created');
-                      setSortOrder('asc');
-                    }}
-                    className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
-                      sortBy === 'created' && sortOrder === 'asc'
-                        ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    Created (Oldest)
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setSortBy('name');
-                      setSortOrder('asc');
-                    }}
-                    className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
-                      sortBy === 'name' && sortOrder === 'asc'
-                        ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    Name (A-Z)
-                  </DropdownMenuItem>
-                  <DropdownMenuItem
-                    onClick={() => {
-                      setSortBy('name');
-                      setSortOrder('desc');
-                    }}
-                    className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
-                      sortBy === 'name' && sortOrder === 'desc'
-                        ? 'bg-white/10 text-white'
-                        : 'text-white/70 hover:bg-white/10 hover:text-white'
-                    }`}
-                  >
-                    Name (Z-A)
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
+            {/* New Project Button */}
+            <button
+              onClick={() => setShowCreateModal(true)}
+              className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-200 font-light tracking-tight shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+            >
+              <FaPlus />
+              New Project
+            </button>
           </div>
         </div>
-      )}
+      </header>
 
       {/* Content */}
       <div className="flex-1 overflow-y-auto relative z-10">
+        {/* Floating Sort Button */}
+        {allProjects.length > 0 && projects.length > 0 && (
+          <div className="absolute top-6 right-6 z-20">
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <button className="flex items-center gap-2 px-3 py-2 bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg text-white hover:bg-white/10 hover:border-white/20 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20 shadow-lg">
+                  <span className="text-sm font-medium">
+                    {sortBy === 'modified' && sortOrder === 'desc' && 'Last Modified (Newest)'}
+                    {sortBy === 'modified' && sortOrder === 'asc' && 'Last Modified (Oldest)'}
+                    {sortBy === 'created' && sortOrder === 'desc' && 'Created (Newest)'}
+                    {sortBy === 'created' && sortOrder === 'asc' && 'Created (Oldest)'}
+                    {sortBy === 'name' && sortOrder === 'asc' && 'Name (A-Z)'}
+                    {sortBy === 'name' && sortOrder === 'desc' && 'Name (Z-A)'}
+                  </span>
+                  <ChevronDown className="w-4 h-4 text-white/70" />
+                </button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent
+                align="end"
+                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-lg shadow-2xl min-w-[200px] p-1"
+              >
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSortBy('modified');
+                    setSortOrder('desc');
+                  }}
+                  className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
+                    sortBy === 'modified' && sortOrder === 'desc'
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/70 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  Last Modified (Newest)
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSortBy('modified');
+                    setSortOrder('asc');
+                  }}
+                  className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
+                    sortBy === 'modified' && sortOrder === 'asc'
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/70 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  Last Modified (Oldest)
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSortBy('created');
+                    setSortOrder('desc');
+                  }}
+                  className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
+                    sortBy === 'created' && sortOrder === 'desc'
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/70 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  Created (Newest)
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSortBy('created');
+                    setSortOrder('asc');
+                  }}
+                  className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
+                    sortBy === 'created' && sortOrder === 'asc'
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/70 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  Created (Oldest)
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSortBy('name');
+                    setSortOrder('asc');
+                  }}
+                  className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
+                    sortBy === 'name' && sortOrder === 'asc'
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/70 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  Name (A-Z)
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    setSortBy('name');
+                    setSortOrder('desc');
+                  }}
+                  className={`px-3 py-2 text-sm rounded-sm cursor-pointer transition-colors ${
+                    sortBy === 'name' && sortOrder === 'desc'
+                      ? 'bg-white/10 text-white'
+                      : 'text-white/70 hover:bg-white/10 hover:text-white'
+                  }`}
+                >
+                  Name (Z-A)
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          </div>
+        )}
+
         {projects.length === 0 ? (
           <EmptyState onCreateClick={() => setShowCreateModal(true)} />
         ) : viewMode === 'grid' ? (
