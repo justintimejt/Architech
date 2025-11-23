@@ -17,10 +17,10 @@ export function ComponentLibrary({ isCollapsed = false, onToggleCollapse }: Comp
 
   if (collapsed) {
     return (
-      <div className="h-full bg-black/0 border-r border-white/10 relative backdrop-blur-sm">
+      <div className="fixed top-32 left-0 z-50">
         <button
           onClick={toggleCollapse}
-          className="absolute top-4 right-0 translate-x-1/2 z-10 bg-white/5 backdrop-blur-sm border border-white/10 rounded-full p-2 shadow-2xl hover:bg-white/10 transition-all duration-200"
+          className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-full p-2 shadow-2xl hover:bg-white/10 transition-all duration-200"
           aria-label="Expand sidebar"
         >
           <FaChevronRight className="w-3 h-3 text-white/70" />
