@@ -44,7 +44,7 @@ export function ProjectCardPreview({ thumbnail, project, className = '' }: Proje
       <img
         src={thumbnail}
         alt={`${project.name || 'Project'} preview`}
-        className={`max-w-full max-h-full object-contain object-center transition-opacity duration-300 ${
+        className={`max-w-full max-h-full object-center transition-opacity duration-300 ${
           isLoading ? 'opacity-0' : 'opacity-100'
         }`}
         style={{
