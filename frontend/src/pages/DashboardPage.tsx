@@ -4,14 +4,17 @@ import { FaPlus, FaTh, FaList, FaSearch, FaProjectDiagram } from 'react-icons/fa
 import { useDashboard } from '../hooks/useDashboard';
 import { useProjectActions } from '../hooks/useProjectActions';
 import { useTemplates } from '../hooks/useTemplates';
+import { useAuth } from '../hooks/useAuth';
 import { saveProjectToStorage } from '../utils/storage';
 import { Project } from '../types';
 import { EmptyState, ProjectGrid, ProjectList, CreateProjectModal } from '../components/Dashboard';
 import { Input } from '@/components/ui/input';
 import { DotScreenShader } from '@/components/ui/dot-shader-background';
+import { ArrowRight } from 'lucide-react';
 
 export function DashboardPage() {
   const navigate = useNavigate();
+  const { user, signOut } = useAuth();
   const {
     projects,
     allProjects,
@@ -30,6 +33,15 @@ export function DashboardPage() {
   const { openProject, deleteProject, duplicate, renameProject, downloadProject } = useProjectActions();
   const { createProjectFromTemplate } = useTemplates();
   const [showCreateModal, setShowCreateModal] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      navigate('/login');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
+  };
 
   const handleCreateFromScratch = (name: string) => {
     const newProject: Project = {
@@ -98,7 +110,34 @@ export function DashboardPage() {
 
       {/* Header */}
       <header className="bg-black/0 border-b border-white/10 px-6 py-4 relative z-10 backdrop-blur-sm">
+        <div className="flex items-center justify-between mb-4">
+          {/* Logo and App Name */}
+          <div className="flex items-center gap-3">
+            <div className="relative">
+              <div className="absolute inset-0 bg-white/20 rounded-lg blur-sm opacity-50"></div>
+              <div className="relative bg-white/10 border border-white/20 p-2 rounded-lg">
+                <FaProjectDiagram className="text-white text-xl" />
+              </div>
+            </div>
+            <div>
+              <h1 className="text-2xl font-bold text-white">BuildFlow</h1>
+              <p className="text-sm text-white/70">Projects</p>
+            </div>
+          </div>
+          
+          {/* Logout Button */}
+          <button
+            onClick={handleLogout}
+            className="flex items-center gap-2 text-white hover:text-white/80 transition-colors font-medium"
+          >
+            <span>Logout</span>
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+        
+        {/* Welcome Message and Create Button */}
         <div className="flex items-center justify-between">
+<<<<<<< HEAD
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/')}
@@ -124,13 +163,22 @@ export function DashboardPage() {
                 )}
               </p>
             </div>
+=======
+          <div>
+            <h2 className="text-3xl font-bold text-white">
+              Welcome {user?.displayName || 'User'},
+            </h2>
+            <p className="text-sm text-white/70 mt-1">
+              Manage your AI simulation projects and view insights
+            </p>
+>>>>>>> c46cb0f (dashboard ui + logout)
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
             className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             <FaPlus />
-            Create New Project
+            New Project
           </button>
         </div>
       </header>

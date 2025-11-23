@@ -1,9 +1,12 @@
 // frontend/src/pages/LoginPage.tsx
+import { useNavigate } from 'react-router-dom';
 import { LoginCard } from '../components/auth';
 import { DotScreenShader } from '@/components/ui/dot-shader-background';
-import { FaProjectDiagram } from 'react-icons/fa';
+import { ArrowLeft } from 'lucide-react';
 
 export function LoginPage() {
+  const navigate = useNavigate();
+
   return (
     <div className="min-h-screen bg-black overflow-x-hidden relative">
       {/* Dot Shader Background - Extended to cover entire page */}
@@ -13,18 +16,17 @@ export function LoginPage() {
         </div>
       </div>
 
-      {/* Header/Logo */}
+      {/* Header */}
       <header className="absolute top-0 left-0 right-0 z-20 px-6 py-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-center">
-          <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 bg-white/20 rounded-lg blur-sm opacity-50"></div>
-              <div className="relative bg-white/10 border border-white/20 p-3 rounded-lg">
-                <FaProjectDiagram className="text-white text-2xl" />
-              </div>
-            </div>
-            <h1 className="text-2xl font-bold text-white">BuildFlow</h1>
-          </div>
+        <div className="max-w-7xl mx-auto">
+          {/* Back Arrow Button */}
+          <button
+            onClick={() => navigate('/')}
+            className="flex items-center gap-2 text-white hover:text-white/80 transition-colors"
+            aria-label="Go back to home"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
         </div>
       </header>
 
