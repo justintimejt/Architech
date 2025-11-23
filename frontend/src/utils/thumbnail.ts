@@ -20,7 +20,7 @@ export const generateThumbnailFromCanvas = async (
       height,
       scale: 1,
       useCORS: true,
-      backgroundColor: '#ffffff',
+      backgroundColor: '#000000',
       logging: false,
       allowTaint: false
     });
@@ -57,21 +57,19 @@ export const createPlaceholderThumbnail = (project: Project): string => {
   
   if (!ctx) return '';
 
-  // Background gradient
-  const gradient = ctx.createLinearGradient(0, 0, 400, 300);
-  gradient.addColorStop(0, '#f3f4f6');
-  gradient.addColorStop(1, '#e5e7eb');
-  ctx.fillStyle = gradient;
+  // Background - pure black
+  ctx.fillStyle = '#000000';
   ctx.fillRect(0, 0, 400, 300);
 
-  // Text
-  ctx.fillStyle = '#6b7280';
+  // Text - white
+  ctx.fillStyle = '#FFFFFF';
   ctx.font = 'bold 24px sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(project.name || 'Untitled Project', 200, 120);
 
-  // Node/Edge count
+  // Node/Edge count - white with 70% opacity
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
   ctx.font = '16px sans-serif';
   ctx.fillText(
     `${project.nodes?.length || 0} nodes • ${project.edges?.length || 0} edges`,

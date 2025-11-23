@@ -46,14 +46,14 @@ export function ProjectList({
   };
 
   return (
-    <div className="divide-y divide-gray-200">
+    <div className="divide-y divide-white/10">
       {projects.map((project) => (
         <div
           key={project.id}
-          className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+          className="flex items-center gap-4 p-4 hover:bg-white/5 transition-colors cursor-pointer"
           onClick={() => onOpen(project.id)}
         >
-          <FaFolder className="text-blue-500 text-xl flex-shrink-0" />
+          <FaFolder className="text-white/70 text-xl flex-shrink-0" />
           <div className="flex-1 min-w-0">
             {renamingId === project.id ? (
               <input
@@ -69,20 +69,20 @@ export function ProjectList({
                   }
                 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full px-2 py-1 border border-blue-500 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-2 py-1 border border-white/20 bg-white/5 text-white rounded focus:outline-none focus:ring-2 focus:ring-white/20"
                 autoFocus
               />
             ) : (
-              <h3 className="font-semibold text-gray-800 truncate">{project.name}</h3>
+              <h3 className="font-semibold text-white truncate">{project.name}</h3>
             )}
             {project.description && (
-              <p className="text-sm text-gray-500 truncate">{project.description}</p>
+              <p className="text-sm text-white/70 truncate">{project.description}</p>
             )}
           </div>
-          <div className="text-sm text-gray-500 whitespace-nowrap">
+          <div className="text-sm text-white/70 whitespace-nowrap">
             {project.nodeCount || 0} nodes
           </div>
-          <div className="text-sm text-gray-500 whitespace-nowrap">
+          <div className="text-sm text-white/70 whitespace-nowrap">
             {formatDistanceToNow(new Date(project.updatedAt), { addSuffix: true })}
           </div>
           <div className="relative">
@@ -91,7 +91,7 @@ export function ProjectList({
                 e.stopPropagation();
                 setMenuOpenId(menuOpenId === project.id ? null : project.id);
               }}
-              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded"
+              className="p-2 text-white/70 hover:text-white hover:bg-white/10 rounded transition-colors"
             >
               <FaEllipsisV />
             </button>
@@ -104,13 +104,13 @@ export function ProjectList({
                     setMenuOpenId(null);
                   }}
                 />
-                <div className="absolute right-0 mt-1 w-48 bg-white rounded-md shadow-lg z-20 border border-gray-200">
+                <div className="absolute right-0 mt-1 w-48 bg-white/5 backdrop-blur-sm rounded-lg shadow-2xl z-20 border border-white/10">
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleStartRename(project);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center gap-2 transition-colors"
                   >
                     <FaEdit className="text-xs" />
                     Rename
@@ -121,7 +121,7 @@ export function ProjectList({
                       onDuplicate(project.id);
                       setMenuOpenId(null);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center gap-2 transition-colors"
                   >
                     <FaCopy className="text-xs" />
                     Duplicate
@@ -132,18 +132,18 @@ export function ProjectList({
                       onExport(project.id);
                       setMenuOpenId(null);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center gap-2 transition-colors"
                   >
                     <FaDownload className="text-xs" />
                     Export
                   </button>
-                  <div className="border-t border-gray-200" />
+                  <div className="border-t border-white/10" />
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDelete(project);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-400/10 flex items-center gap-2 transition-colors"
                   >
                     <FaTrash className="text-xs" />
                     Delete

@@ -17,7 +17,7 @@ export function ProjectCardPreview({ thumbnail, project, className = '' }: Proje
   if (!thumbnail || imageError) {
     const placeholder = createPlaceholderThumbnail(project);
     return (
-      <div className={`w-full h-48 bg-gradient-to-br from-gray-100 to-gray-200 flex items-center justify-center ${className}`}>
+      <div className={`w-full h-48 bg-black flex items-center justify-center ${className}`}>
         {placeholder ? (
           <img
             src={placeholder}
@@ -25,7 +25,7 @@ export function ProjectCardPreview({ thumbnail, project, className = '' }: Proje
             className="max-w-full max-h-full object-contain"
           />
         ) : (
-          <div className="flex flex-col items-center justify-center text-gray-400">
+          <div className="flex flex-col items-center justify-center text-white/50">
             <FaFolder className="text-4xl mb-2" />
             <span className="text-sm">No preview</span>
           </div>
@@ -35,10 +35,10 @@ export function ProjectCardPreview({ thumbnail, project, className = '' }: Proje
   }
 
   return (
-    <div className={`relative w-full h-48 bg-gray-100 overflow-hidden flex items-center justify-center ${className}`}>
+    <div className={`relative w-full h-48 bg-black overflow-hidden flex items-center justify-center ${className}`}>
       {isLoading && (
-        <div className="absolute inset-0 bg-gray-200 animate-pulse flex items-center justify-center">
-          <FaImage className="text-gray-400 text-2xl" />
+        <div className="absolute inset-0 bg-black animate-pulse flex items-center justify-center">
+          <FaImage className="text-white/30 text-2xl" />
         </div>
       )}
       <img
