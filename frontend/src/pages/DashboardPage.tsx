@@ -110,7 +110,7 @@ export function DashboardPage() {
       {/* Dot Shader Background */}
       <div className="fixed inset-0 z-0 pointer-events-none">
         <div className="w-full h-full">
-          <DotScreenShader opacityMultiplier={0.4} />
+          <DotScreenShader opacityMultiplier={0.15} />
         </div>
       </div>
 
