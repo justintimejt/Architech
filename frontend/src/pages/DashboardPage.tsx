@@ -8,6 +8,7 @@ import { saveProjectToStorage } from '../utils/storage';
 import { Project } from '../types';
 import { EmptyState, ProjectGrid, ProjectList, CreateProjectModal } from '../components/Dashboard';
 import { Input } from '@/components/ui/input';
+import { DotScreenShader } from '@/components/ui/dot-shader-background';
 
 export function DashboardPage() {
   const navigate = useNavigate();
@@ -75,20 +76,32 @@ export function DashboardPage() {
 
   if (isLoading) {
     return (
-      <div className="h-screen flex items-center justify-center">
-        <div className="text-gray-600">Loading projects...</div>
+      <div className="h-screen flex items-center justify-center bg-black relative">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="w-full h-full">
+            <DotScreenShader />
+          </div>
+        </div>
+        <div className="text-white/70 relative z-10">Loading projects...</div>
       </div>
     );
   }
 
   return (
-    <div className="h-screen flex flex-col bg-gray-50">
+    <div className="h-screen flex flex-col bg-black overflow-hidden relative">
+      {/* Dot Shader Background */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="w-full h-full">
+          <DotScreenShader />
+        </div>
+      </div>
+
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-6 py-4">
+      <header className="bg-black/0 border-b border-white/10 px-6 py-4 relative z-10 backdrop-blur-sm">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-bold text-gray-800">Projects</h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <h1 className="text-2xl font-bold text-white">Projects</h1>
+            <p className="text-sm text-white/70 mt-1">
               {searchQuery ? (
                 <>
                   {projects.length} of {allProjects.length} {projects.length === 1 ? 'project' : 'projects'}
@@ -102,7 +115,7 @@ export function DashboardPage() {
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
-            className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors font-medium"
+            className="flex items-center gap-2 px-4 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-200 font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
           >
             <FaPlus />
             Create New Project
@@ -112,37 +125,37 @@ export function DashboardPage() {
 
       {/* Toolbar */}
       {allProjects.length > 0 && (
-        <div className="bg-white border-b border-gray-200 px-6 py-3">
+        <div className="bg-black/0 border-b border-white/10 px-6 py-3 relative z-10 backdrop-blur-sm">
           <div className="flex items-center justify-between">
             {/* Search */}
             <div className="flex-1 max-w-md">
               <div className="relative">
-                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground z-10" />
+                <FaSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/70 z-10" />
                 <Input
                   type="text"
                   placeholder="Search projects..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="pl-10"
+                  className="pl-10 bg-white/5 border-white/10 text-white placeholder:text-white/50 focus:border-white/20"
                 />
               </div>
             </div>
 
             {/* View Toggle & Sort */}
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 bg-gray-100 rounded-lg p-1">
+              <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-lg p-1">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded transition-colors ${
-                    viewMode === 'grid' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600'
+                  className={`p-2 rounded transition-all duration-200 ${
+                    viewMode === 'grid' ? 'bg-white/10 text-white shadow-sm' : 'text-white/70 hover:text-white'
                   }`}
                 >
                   <FaTh />
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded transition-colors ${
-                    viewMode === 'list' ? 'bg-white text-blue-600 shadow-sm' : 'text-gray-600'
+                  className={`p-2 rounded transition-all duration-200 ${
+                    viewMode === 'list' ? 'bg-white/10 text-white shadow-sm' : 'text-white/70 hover:text-white'
                   }`}
                 >
                   <FaList />
@@ -156,14 +169,14 @@ export function DashboardPage() {
                   setSortBy(by as any);
                   setSortOrder(order as 'asc' | 'desc');
                 }}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="px-3 py-2 bg-white/5 border border-white/10 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20"
               >
-                <option value="modified-desc">Last Modified (Newest)</option>
-                <option value="modified-asc">Last Modified (Oldest)</option>
-                <option value="created-desc">Created (Newest)</option>
-                <option value="created-asc">Created (Oldest)</option>
-                <option value="name-asc">Name (A-Z)</option>
-                <option value="name-desc">Name (Z-A)</option>
+                <option value="modified-desc" className="bg-black">Last Modified (Newest)</option>
+                <option value="modified-asc" className="bg-black">Last Modified (Oldest)</option>
+                <option value="created-desc" className="bg-black">Created (Newest)</option>
+                <option value="created-asc" className="bg-black">Created (Oldest)</option>
+                <option value="name-asc" className="bg-black">Name (A-Z)</option>
+                <option value="name-desc" className="bg-black">Name (Z-A)</option>
               </select>
             </div>
           </div>
@@ -171,7 +184,7 @@ export function DashboardPage() {
       )}
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto relative z-10">
         {projects.length === 0 ? (
           <EmptyState onCreateClick={() => setShowCreateModal(true)} />
         ) : viewMode === 'grid' ? (
@@ -184,7 +197,7 @@ export function DashboardPage() {
             onExport={downloadProject}
           />
         ) : (
-          <div className="bg-white">
+          <div className="bg-black/0">
             <ProjectList
               projects={projects}
               onOpen={openProject}

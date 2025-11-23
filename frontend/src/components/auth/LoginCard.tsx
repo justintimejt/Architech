@@ -79,35 +79,32 @@ export function LoginCard({
 
   if (!isSupabaseAvailable()) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-gray-50">
-        <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
-          <div className="text-center">
-            <h1 className="text-2xl font-semibold text-gray-800">Welcome to BuildFlow</h1>
-            <p className="mt-3 text-sm text-red-600">
-              Supabase is not configured. Please set up your environment variables.
-            </p>
-          </div>
+      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 shadow-2xl">
+        <div className="text-center">
+          <h1 className="text-2xl font-semibold text-white">Welcome to BuildFlow</h1>
+          <p className="mt-3 text-sm text-red-400">
+            Supabase is not configured. Please set up your environment variables.
+          </p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50">
-      <div className="w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-lg">
-        <div className="mb-6 text-center">
-          <h1 className="text-2xl font-semibold tracking-tight text-gray-800">Welcome to BuildFlow</h1>
-          <p className="mt-1 text-sm text-gray-500">
-            Sign in to save and manage your architecture diagrams.
-          </p>
-        </div>
+    <div className="w-full max-w-md rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm p-8 shadow-2xl">
+      <div className="mb-6 text-center">
+        <h1 className="text-2xl font-semibold tracking-tight text-white">Welcome to BuildFlow</h1>
+        <p className="mt-1 text-sm text-white/70">
+          Sign in to save and manage your architecture diagrams.
+        </p>
+      </div>
 
         <div className="space-y-3">
           <button
             type="button"
             onClick={handleGoogleSignIn}
             disabled={isLoadingGoogle || isLoadingGitHub}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-70 transition-colors"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white text-black px-4 py-3 text-sm font-medium shadow-lg hover:bg-gray-200 disabled:cursor-not-allowed disabled:opacity-70 transition-all duration-200"
           >
             {isLoadingGoogle ? (
               <span>Signing in…</span>
@@ -144,7 +141,7 @@ export function LoginCard({
             type="button"
             onClick={handleGitHubSignIn}
             disabled={isLoadingGoogle || isLoadingGitHub}
-            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-gray-800 disabled:cursor-not-allowed disabled:opacity-70 transition-colors"
+            className="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-white/10 border border-white/20 px-4 py-3 text-sm font-medium text-white shadow-lg hover:bg-white/20 hover:border-white/30 disabled:cursor-not-allowed disabled:opacity-70 transition-all duration-200"
           >
             {isLoadingGitHub ? (
               <span>Signing in…</span>
@@ -163,16 +160,15 @@ export function LoginCard({
           </button>
         </div>
 
-        {error && (
-          <p className="mt-3 text-center text-xs text-red-600">
-            {error}
-          </p>
-        )}
-
-        <p className="mt-6 text-center text-xs text-gray-500">
-          By continuing, you agree to our Terms and Privacy Policy.
+      {error && (
+        <p className="mt-3 text-center text-xs text-red-400">
+          {error}
         </p>
-      </div>
+      )}
+
+      <p className="mt-6 text-center text-xs text-white/50">
+        By continuing, you agree to our Terms and Privacy Policy.
+      </p>
     </div>
   );
 }

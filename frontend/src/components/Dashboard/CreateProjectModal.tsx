@@ -48,13 +48,13 @@ export function CreateProjectModal({
 
   return (
     <>
-      <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-        <div className="bg-white rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-          <div className="flex items-center justify-between p-6 border-b border-gray-200">
-            <h2 className="text-2xl font-semibold text-gray-800">Create New Project</h2>
+      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div className="bg-white/5 backdrop-blur-sm rounded-2xl shadow-2xl border border-white/10 max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+          <div className="flex items-center justify-between p-6 border-b border-white/10">
+            <h2 className="text-2xl font-semibold text-white">Create New Project</h2>
             <button
               onClick={onClose}
-              className="text-gray-400 hover:text-gray-600 transition-colors"
+              className="text-white/70 hover:text-white transition-colors"
             >
               <FaTimes />
             </button>
@@ -63,12 +63,12 @@ export function CreateProjectModal({
           <div className="p-6 space-y-6">
             {/* Creation Mode Selection */}
             <div className="space-y-3">
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="block text-sm font-medium text-white mb-2">
                 Start with:
               </label>
               
               <div className="space-y-2">
-                <label className="flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <label className="flex items-start gap-3 p-4 border-2 border-white/10 rounded-lg cursor-pointer hover:bg-white/5 hover:border-white/20 transition-all duration-200">
                   <input
                     type="radio"
                     name="creationMode"
@@ -83,16 +83,16 @@ export function CreateProjectModal({
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <FaPlus className="text-blue-600" />
-                      <span className="font-medium text-gray-800">Start from Scratch</span>
+                      <FaPlus className="text-white" />
+                      <span className="font-medium text-white">Start from Scratch</span>
                     </div>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-white/70">
                       Create an empty project and build your architecture from the ground up
                     </p>
                   </div>
                 </label>
 
-                <label className="flex items-start gap-3 p-4 border-2 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+                <label className="flex items-start gap-3 p-4 border-2 border-white/10 rounded-lg cursor-pointer hover:bg-white/5 hover:border-white/20 transition-all duration-200">
                   <input
                     type="radio"
                     name="creationMode"
@@ -103,10 +103,10 @@ export function CreateProjectModal({
                   />
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <FaLayerGroup className="text-purple-600" />
-                      <span className="font-medium text-gray-800">Use Template</span>
+                      <FaLayerGroup className="text-white" />
+                      <span className="font-medium text-white">Use Template</span>
                     </div>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-white/70">
                       Start from a pre-built architecture template
                     </p>
                   </div>
@@ -120,12 +120,12 @@ export function CreateProjectModal({
                 {!showTemplateGallery && (
                   <div>
                     {selectedTemplate ? (
-                      <div className="p-4 bg-purple-50 border border-purple-200 rounded-lg">
+                      <div className="p-4 bg-white/5 border border-white/10 rounded-lg">
                         <div className="flex items-center justify-between">
                           <div>
-                            <h4 className="font-medium text-gray-800">{selectedTemplate.name}</h4>
-                            <p className="text-sm text-gray-600">{selectedTemplate.description}</p>
-                            <p className="text-xs text-gray-500 mt-1">
+                            <h4 className="font-medium text-white">{selectedTemplate.name}</h4>
+                            <p className="text-sm text-white/70">{selectedTemplate.description}</p>
+                            <p className="text-xs text-white/50 mt-1">
                               {selectedTemplate.nodeCount} nodes • {selectedTemplate.edgeCount} edges
                             </p>
                           </div>
@@ -134,7 +134,7 @@ export function CreateProjectModal({
                               setShowTemplateGallery(true);
                               setSelectedTemplate(null);
                             }}
-                            className="text-sm text-purple-600 hover:text-purple-700"
+                            className="text-sm text-white/70 hover:text-white transition-colors"
                           >
                             Change Template
                           </button>
@@ -143,7 +143,7 @@ export function CreateProjectModal({
                     ) : (
                       <button
                         onClick={() => setShowTemplateGallery(true)}
-                        className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-purple-500 hover:bg-purple-50 transition-colors text-gray-700 font-medium"
+                        className="w-full px-4 py-3 border-2 border-dashed border-white/20 rounded-lg hover:border-white/30 hover:bg-white/5 transition-all duration-200 text-white font-medium"
                       >
                         Browse Templates
                       </button>
@@ -162,7 +162,7 @@ export function CreateProjectModal({
 
             {/* Project Name Input */}
             <div className="space-y-2">
-              <label htmlFor="projectName" className="block text-sm font-medium text-gray-700">
+              <label htmlFor="projectName" className="block text-sm font-medium text-white">
                 Project Name
               </label>
               <input
@@ -171,7 +171,7 @@ export function CreateProjectModal({
                 value={projectName}
                 onChange={(e) => setProjectName(e.target.value)}
                 placeholder="Untitled Project"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 bg-white/5 border border-white/10 rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-white/20 focus:border-white/20"
                 onKeyDown={(e) => {
                   if (e.key === 'Enter') {
                     if (creationMode === 'template' && !selectedTemplate) {
@@ -186,17 +186,17 @@ export function CreateProjectModal({
           </div>
 
           {/* Actions */}
-          <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200">
+          <div className="flex items-center justify-end gap-3 p-6 border-t border-white/10">
             <button
               onClick={onClose}
-              className="px-4 py-2 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors"
+              className="px-4 py-2 text-white/70 hover:text-white hover:bg-white/10 rounded-lg transition-all duration-200"
             >
               Cancel
             </button>
             <button
               onClick={handleCreate}
               disabled={creationMode === 'template' && !selectedTemplate}
-              className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+              className="px-6 py-2 bg-white text-black rounded-lg hover:bg-gray-200 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
             >
               Create Project
             </button>

@@ -75,10 +75,10 @@ export function ProjectCard({
 
   return (
     <div
-      className="bg-white shadow-md border border-gray-200 overflow-hidden flex flex-col"
+      className="bg-white/5 backdrop-blur-sm shadow-2xl border border-white/10 overflow-hidden flex flex-col rounded-2xl"
     >
       {/* Preview Image Section */}
-      <div className="relative w-full h-48 overflow-hidden bg-gray-100">
+      <div className="relative w-full h-48 overflow-hidden bg-black">
         <ProjectCardPreview
           thumbnail={project.thumbnail}
           project={project.project}
@@ -104,19 +104,19 @@ export function ProjectCard({
                   }
                 }}
                 onClick={(e) => e.stopPropagation()}
-                className="w-full px-2 py-1 border border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 font-semibold text-gray-800"
+                className="w-full px-2 py-1 border border-white/20 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-white/20 rounded"
                 autoFocus
               />
             ) : (
               <h3
-                className="font-semibold text-gray-800 truncate text-lg mb-1"
+                className="font-semibold text-white truncate text-lg mb-1"
                 title={project.name}
               >
                 {project.name}
               </h3>
             )}
             {project.description && (
-              <p className="text-sm text-gray-600 line-clamp-2 mt-1">{project.description}</p>
+              <p className="text-sm text-white/70 line-clamp-2 mt-1">{project.description}</p>
             )}
           </div>
           <div className="relative z-30 ml-2">
@@ -126,7 +126,7 @@ export function ProjectCard({
                 e.stopPropagation();
                 setShowMenu(!showMenu);
               }}
-              className="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 transition-colors"
+              className="p-2 text-white/70 hover:text-white hover:bg-white/10 transition-colors rounded"
               title="More options"
             >
               <FaEllipsisV />
@@ -141,7 +141,7 @@ export function ProjectCard({
                   }}
                 />
                 <div
-                  className="fixed w-48 bg-white shadow-lg z-50 border border-gray-200"
+                  className="fixed w-48 bg-white/5 backdrop-blur-sm shadow-2xl z-50 border border-white/10 rounded-lg"
                   style={{
                     top: `${menuPosition.top}px`,
                     right: `${menuPosition.right}px`
@@ -154,7 +154,7 @@ export function ProjectCard({
                       setIsRenaming(true);
                       setShowMenu(false);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center gap-2 transition-colors"
                   >
                     <FaEdit className="text-xs" />
                     Rename
@@ -164,7 +164,7 @@ export function ProjectCard({
                       e.stopPropagation();
                       handleDuplicate();
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center gap-2 transition-colors"
                   >
                     <FaCopy className="text-xs" />
                     Duplicate
@@ -175,18 +175,18 @@ export function ProjectCard({
                       onExport(project.id);
                       setShowMenu(false);
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-white hover:bg-white/10 flex items-center gap-2 transition-colors"
                   >
                     <FaDownload className="text-xs" />
                     Export
                   </button>
-                  <div className="border-t border-gray-200" />
+                  <div className="border-t border-white/10" />
                   <button
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDelete();
                     }}
-                    className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-50 flex items-center gap-2"
+                    className="w-full text-left px-4 py-2 text-sm text-red-400 hover:bg-red-400/10 flex items-center gap-2 transition-colors"
                   >
                     <FaTrash className="text-xs" />
                     Delete
@@ -198,14 +198,14 @@ export function ProjectCard({
         </div>
 
         {/* Metadata */}
-        <div className="flex items-center gap-4 text-xs text-gray-500 mb-4">
+        <div className="flex items-center gap-4 text-xs text-white/70 mb-4">
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 bg-blue-500"></span>
+            <span className="w-2 h-2 bg-white/70 rounded-full"></span>
             {project.nodeCount || 0} nodes
           </span>
           <span>•</span>
           <span className="flex items-center gap-1">
-            <span className="w-2 h-2 bg-purple-500"></span>
+            <span className="w-2 h-2 bg-white/70 rounded-full"></span>
             {project.edgeCount || 0} edges
           </span>
           <span>•</span>
@@ -220,7 +220,7 @@ export function ProjectCard({
             e.stopPropagation();
             onOpen(project.id);
           }}
-          className="w-full mt-auto px-4 py-3 bg-gray-200 text-gray-900 hover:bg-gray-300 transition-colors flex items-center justify-center gap-2 font-medium text-sm"
+          className="w-full mt-auto px-4 py-3 bg-white/10 border border-white/20 text-white hover:bg-white/20 hover:border-white/30 transition-all duration-200 flex items-center justify-center gap-2 font-semibold text-sm rounded-lg"
         >
           Open Project
           <FaArrowRight className="text-xs" />

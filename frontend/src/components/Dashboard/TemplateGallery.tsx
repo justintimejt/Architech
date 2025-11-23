@@ -37,10 +37,10 @@ export function TemplateGallery({ onSelect, onClose }: TemplateGalleryProps) {
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h3 className="text-lg font-semibold text-gray-800">Select a Template</h3>
+        <h3 className="text-lg font-semibold text-white">Select a Template</h3>
         <button
           onClick={onClose}
-          className="text-gray-400 hover:text-gray-600 transition-colors"
+          className="text-white/70 hover:text-white transition-colors"
         >
           <FaTimes />
         </button>
@@ -50,10 +50,10 @@ export function TemplateGallery({ onSelect, onClose }: TemplateGalleryProps) {
       <div className="flex flex-wrap gap-2">
         <button
           onClick={() => setSelectedCategory('all')}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+          className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
             selectedCategory === 'all'
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+              ? 'bg-white text-black shadow-lg'
+              : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
           }`}
         >
           All
@@ -64,10 +64,10 @@ export function TemplateGallery({ onSelect, onClose }: TemplateGalleryProps) {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-2 ${
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
                 selectedCategory === category
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  ? 'bg-white text-black shadow-lg'
+                  : 'bg-white/5 border border-white/10 text-white hover:bg-white/10'
               }`}
             >
               <Icon />
@@ -79,7 +79,7 @@ export function TemplateGallery({ onSelect, onClose }: TemplateGalleryProps) {
 
       {/* Templates Grid */}
       {templates.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-8 text-white/70">
           No templates found in this category.
         </div>
       ) : (
@@ -87,29 +87,29 @@ export function TemplateGallery({ onSelect, onClose }: TemplateGalleryProps) {
           {templates.map((template) => {
             const Icon = categoryIcons[template.category];
             const complexityColors = {
-              simple: 'bg-green-100 text-green-700',
-              medium: 'bg-yellow-100 text-yellow-700',
-              complex: 'bg-red-100 text-red-700'
+              simple: 'bg-white/10 text-white border border-white/20',
+              medium: 'bg-white/10 text-white border border-white/20',
+              complex: 'bg-white/10 text-white border border-white/20'
             };
 
             return (
               <button
                 key={template.id}
                 onClick={() => onSelect(template)}
-                className="text-left p-4 border-2 border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all"
+                className="text-left p-4 border-2 border-white/10 rounded-lg hover:border-white/20 hover:bg-white/5 transition-all duration-200"
               >
                 <div className="flex items-start gap-3 mb-2">
-                  <Icon className="text-2xl text-blue-600 flex-shrink-0 mt-1" />
+                  <Icon className="text-2xl text-white flex-shrink-0 mt-1" />
                   <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-gray-800 mb-1">{template.name}</h4>
-                    <p className="text-sm text-gray-600 line-clamp-2">{template.description}</p>
+                    <h4 className="font-semibold text-white mb-1">{template.name}</h4>
+                    <p className="text-sm text-white/70 line-clamp-2">{template.description}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-3 mt-3 text-xs">
                   <span className={`px-2 py-1 rounded ${complexityColors[template.complexity]}`}>
                     {template.complexity}
                   </span>
-                  <span className="text-gray-500">
+                  <span className="text-white/70">
                     {template.nodeCount} nodes • {template.edgeCount} edges
                   </span>
                 </div>
