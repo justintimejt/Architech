@@ -41,7 +41,7 @@ export function HomePage() {
                   <FaProjectDiagram className="text-white text-2xl" />
                 </div>
               </div>
-              <h1 className="text-2xl font-bold text-white">BuildFlow</h1>
+              <h1 className="text-2xl font-bold text-white font-cascadia" style={{ fontFamily: "'Cascadia Code', monospace" }}>Architech</h1>
             </div>
           </div>
         </header>
@@ -58,7 +58,7 @@ export function HomePage() {
           </h2>
 
           <p className="text-xl md:text-2xl font-light text-white mix-blend-exclusion mb-10 max-w-3xl mx-auto leading-relaxed">
-            BuildFlow is <span className="text-white font-semibold">Figma + React Flow</span> for architecture diagrams. 
+            Architech is <span className="text-white font-semibold">Figma + React Flow</span> for architecture diagrams. 
             Create beautiful system designs from your roughest sketches in seconds.
           </p>
 
@@ -106,7 +106,7 @@ export function HomePage() {
               <iframe
                 className="w-full h-full"
                 src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
-                title="BuildFlow Demo"
+                title="Architech Demo"
                 frameBorder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
@@ -118,7 +118,7 @@ export function HomePage() {
           {/* Text below video */}
           <div className="text-center">
             <h3 className="text-4xl md:text-5xl font-light text-white mb-4">
-              See BuildFlow in Action
+              See Architech in Action
             </h3>
             <p className="text-xl text-white/70 max-w-2xl mx-auto">
               Watch how easy it is to create beautiful architecture diagrams in minutes

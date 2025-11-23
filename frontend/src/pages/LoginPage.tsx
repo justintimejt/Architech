@@ -30,7 +30,7 @@ export function LoginPage() {
                 <FaProjectDiagram className="text-white text-2xl" />
               </div>
             </div>
-            <h1 className="text-2xl font-bold text-white">BuildFlow</h1>
+            <h1 className="text-2xl font-bold text-white font-cascadia" style={{ fontFamily: "'Cascadia Code', monospace" }}>Architech</h1>
           </button>
         </div>
       </header>

@@ -111,7 +111,7 @@ export function ChatBar({ projectId, leftSidebarCollapsed = false }: ChatBarProp
             <div className="w-2 h-2 bg-green-500 rounded-full"></div>
             <div className="absolute inset-0 w-2 h-2 bg-green-500 rounded-full animate-ping opacity-75"></div>
           </div>
-          <span className="text-sm font-semibold text-white">Luna</span>
+          <span className="text-sm font-semibold text-white">Archie</span>
           <div className="w-px h-4 bg-white/10"></div>
           <span className="text-sm font-normal text-white/70">gemini-2.5-flash</span>
         </div>
@@ -144,7 +144,7 @@ export function ChatBar({ projectId, leftSidebarCollapsed = false }: ChatBarProp
             <>
               {messages.length === 0 && (
                 <div className="text-center text-white/70 mt-8">
-                  <p className="text-sm">Start chatting with Luna to modify your diagram.</p>
+                  <p className="text-sm">Start chatting with Archie to modify your diagram.</p>
                   <p className="text-xs mt-2 text-white/50">Example: "Add a database node"</p>
                 </div>
               )}
@@ -173,7 +173,7 @@ export function ChatBar({ projectId, leftSidebarCollapsed = false }: ChatBarProp
                     )}
                   >
                     <div className="text-xs font-medium mb-1.5 opacity-70">
-                      {message.role === 'user' ? 'You' : 'Luna'}
+                      {message.role === 'user' ? 'You' : 'Archie'}
                     </div>
                     <div className="text-sm break-words whitespace-pre-wrap leading-relaxed">
                       {message.content}
@@ -233,7 +233,7 @@ export function ChatBar({ projectId, leftSidebarCollapsed = false }: ChatBarProp
               isDisabled
                 ? "Configure Supabase to enable chat..."
                 : isExpanded
-                ? "Ask Luna to modify your diagram... (Shift+Enter for new line)"
+                ? "Ask Archie to modify your diagram... (Shift+Enter for new line)"
                 : "Type a message..."
             }
             disabled={isLoading || isDisabled}

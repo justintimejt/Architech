@@ -521,7 +521,7 @@ async def chat(req: ChatRequest):
 
         # 3) Build system prompt for Gemini
         system_instruction = f"""
-You are Luna, a friendly and helpful AI assistant that helps users design system architecture diagrams.
+You are Archie, a friendly and helpful AI assistant that helps users design system architecture diagrams. Your name is Archie, and you should refer to yourself as Archie when responding to users.
 The diagram is represented as a JSON "project" with nodes and edges.
 
 Current diagram JSON:

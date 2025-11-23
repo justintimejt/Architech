@@ -65,8 +65,8 @@ export function LoadingAnimation() {
                     className="mb-8"
                 >
                     <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter">
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-900 to-neutral-700/80 dark:from-white dark:to-white/80">
-                            BuildFlow
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-neutral-900 to-neutral-700/80 dark:from-white dark:to-white/80 font-cascadia" style={{ fontFamily: "'Cascadia Code', monospace" }}>
+                            Architech
                         </span>
                     </h2>
                 </motion.div>

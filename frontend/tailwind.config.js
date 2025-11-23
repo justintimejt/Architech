@@ -14,6 +14,9 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        'cascadia': ['Cascadia Code', 'monospace'],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",

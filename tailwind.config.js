@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        'cascadia': ['Cascadia Code', 'monospace'],
+      },
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",

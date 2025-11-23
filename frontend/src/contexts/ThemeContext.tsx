@@ -15,7 +15,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   useEffect(() => {
     // Check localStorage
-    const stored = window.localStorage.getItem('buildflow-theme') as Theme | null;
+    const stored = window.localStorage.getItem('architech-theme') as Theme | null;
     
     if (stored === 'light' || stored === 'dark') {
       setThemeState(stored);
@@ -29,7 +29,7 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({ children }) =
 
   useEffect(() => {
     // Persist to localStorage
-    window.localStorage.setItem('buildflow-theme', theme);
+    window.localStorage.setItem('architech-theme', theme);
 
     // Apply class to root
     const root = document.documentElement;

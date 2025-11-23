@@ -55,7 +55,7 @@ export function ChatPanel({ projectId }: ChatPanelProps) {
     <div className="h-full flex flex-col bg-background border-l border-border rounded-r-lg overflow-hidden" style={{ backgroundColor: 'hsl(var(--background))' }}>
       <div className="px-4 py-3 border-b border-border bg-background flex items-center gap-2 rounded-tr-lg" style={{ backgroundColor: 'hsl(var(--background))' }}>
         <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-        <span className="text-sm font-semibold text-foreground">AI Assistant</span>
+        <span className="text-sm font-semibold text-foreground">Archie</span>
         <div className="w-px h-4 bg-border"></div>
         <span className="text-sm text-muted-foreground">gemini-2.5-flash</span>
       </div>
@@ -63,7 +63,7 @@ export function ChatPanel({ projectId }: ChatPanelProps) {
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 && (
           <div className="text-center text-muted-foreground mt-8">
-            <p className="text-sm">Start chatting with Luna to modify your diagram.</p>
+            <p className="text-sm">Start chatting with Archie to modify your diagram.</p>
             <p className="text-xs mt-2 text-muted-foreground/70">Example: "Add a database node"</p>
           </div>
         )}
@@ -92,7 +92,7 @@ export function ChatPanel({ projectId }: ChatPanelProps) {
               )}
             >
               <div className="text-xs font-medium mb-1.5 opacity-70">
-                {message.role === 'user' ? 'You' : 'Luna'}
+                {message.role === 'user' ? 'You' : 'Archie'}
               </div>
               <div className="text-sm break-words whitespace-pre-wrap leading-relaxed">
                 {message.content}
@@ -138,7 +138,7 @@ export function ChatPanel({ projectId }: ChatPanelProps) {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask Luna to modify your diagram... (Shift+Enter for new line)"
+            placeholder="Ask Archie to modify your diagram... (Shift+Enter for new line)"
             disabled={isLoading}
             className="resize-none min-h-[40px] max-h-[120px]"
             rows={1}

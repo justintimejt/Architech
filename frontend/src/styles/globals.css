@@ -46,6 +46,12 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+@layer utilities {
+  .font-cascadia {
+    font-family: 'Cascadia Code', monospace !important;
+  }
+}
+
 #root {
   width: 100%;
   min-height: 100vh;
