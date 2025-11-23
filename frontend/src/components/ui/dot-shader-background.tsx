@@ -18,7 +18,7 @@ const DotMaterial = shaderMaterial(
     render: 0,
     rotation: 0,
     gridSize: 50,
-    dotOpacity: 0.05
+    dotOpacity: 0.01
   },
   /* glsl */ `
     void main() {
@@ -110,19 +110,19 @@ function Scene() {
         return {
           dotColor: '#FFFFFF',
           bgColor: '#000000', // Pure black background
-          dotOpacity: 0.025
+          dotOpacity: 0.005
         }
       case 'light':
         return {
           dotColor: '#4A90E2', // Using the vibrant blue from color palette
           bgColor: '#F7F7F7', // Using the off-white from color palette
-          dotOpacity: 0.15
+          dotOpacity: 0.03
         }
       default:
         return {
           dotColor: '#FFFFFF',
           bgColor: '#000000', // Pure black background
-          dotOpacity: 0.05
+          dotOpacity: 0.01
         }
     }
   }
