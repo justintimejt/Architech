@@ -1,6 +1,10 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+<<<<<<< HEAD
 import { FaPlus, FaTh, FaList, FaSearch, FaProjectDiagram } from 'react-icons/fa';
+=======
+import { FaPlus, FaTh, FaList, FaSearch } from 'react-icons/fa';
+>>>>>>> 55bb7f59415bf1da739e685e31a41887ebfecc65
 import { useDashboard } from '../hooks/useDashboard';
 import { useProjectActions } from '../hooks/useProjectActions';
 import { useTemplates } from '../hooks/useTemplates';
@@ -99,6 +103,7 @@ export function DashboardPage() {
       {/* Header */}
       <header className="bg-black/0 border-b border-white/10 px-6 py-4 relative z-10 backdrop-blur-sm">
         <div className="flex items-center justify-between">
+<<<<<<< HEAD
           <div className="flex items-center gap-4">
             <button
               onClick={() => navigate('/')}
@@ -124,6 +129,21 @@ export function DashboardPage() {
                 )}
               </p>
             </div>
+=======
+          <div>
+            <h1 className="text-2xl font-bold text-white">Projects</h1>
+            <p className="text-sm text-white/70 mt-1">
+              {searchQuery ? (
+                <>
+                  {projects.length} of {allProjects.length} {projects.length === 1 ? 'project' : 'projects'}
+                </>
+              ) : (
+                <>
+              {projects.length} {projects.length === 1 ? 'project' : 'projects'}
+                </>
+              )}
+            </p>
+>>>>>>> 55bb7f59415bf1da739e685e31a41887ebfecc65
           </div>
           <button
             onClick={() => setShowCreateModal(true)}
