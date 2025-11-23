@@ -113,12 +113,16 @@ export function DashboardPage() {
         <div className="flex items-center justify-between mb-4">
           {/* Logo and App Name */}
           <div className="flex items-center gap-3">
-            <div className="relative">
-              <div className="absolute inset-0 bg-white/20 rounded-lg blur-sm opacity-50"></div>
-              <div className="relative bg-white/10 border border-white/20 p-2 rounded-lg">
+            <button
+              onClick={() => navigate('/')}
+              className="relative group cursor-pointer transition-transform hover:scale-105"
+              aria-label="Go to landing page"
+            >
+              <div className="absolute inset-0 bg-white/20 rounded-lg blur-sm opacity-50 group-hover:opacity-70 transition-opacity"></div>
+              <div className="relative bg-white/10 border border-white/20 p-2 rounded-lg group-hover:bg-white/15 transition-colors">
                 <FaProjectDiagram className="text-white text-xl" />
               </div>
-            </div>
+            </button>
             <div>
               <h1 className="text-2xl font-bold text-white">BuildFlow</h1>
               <p className="text-sm text-white/70">Projects</p>
