@@ -9,4 +9,5 @@ export {
   DropdownMenuSeparator,
   DropdownMenuLabel,
 } from './dropdown-menu';
+export { DotScreenShader } from './dot-shader-background';
 
