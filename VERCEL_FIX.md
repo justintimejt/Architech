@@ -44,3 +44,4 @@ If the issue persists after redeploying, you can also configure headers directly
 
 The `/vite.svg` 404 error is harmless - it's likely the browser trying to fetch a default favicon. This doesn't affect functionality.
 
+
