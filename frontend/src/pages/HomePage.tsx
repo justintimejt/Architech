@@ -89,14 +89,17 @@ export function HomePage() {
           {/* Video Container */}
           <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10 bg-black mb-12">
             <div className="aspect-video bg-black">
-              <iframe
-                className="w-full h-full"
-                src="https://www.youtube.com/embed/v86YGnCLm-M?autoplay=1&mute=1&loop=1&playlist=v86YGnCLm-M"
+              <video
+                className="w-full h-full object-cover"
+                src="/architech-demo.mp4"
+                autoPlay
+                muted
+                loop
+                playsInline
                 title="Architech Demo"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              ></iframe>
+              >
+                Your browser does not support the video tag.
+              </video>
             </div>
           </div>
 
