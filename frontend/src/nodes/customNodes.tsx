@@ -17,7 +17,7 @@ export function CustomNode(props: NodeProps) {
 
   return (
     <div
-      className={`px-4 py-3 shadow-2xl rounded-lg border-2 min-w-[150px] bg-white/5 backdrop-blur-sm ${
+      className={`px-4 py-3 shadow-2xl rounded-lg border-2 min-w-[150px] max-w-[250px] bg-white/5 backdrop-blur-sm ${
         selected ? 'border-white/30' : 'border-white/10'
       } transition-all duration-200`}
     >

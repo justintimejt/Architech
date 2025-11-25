@@ -29,6 +29,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "web-server",
         "label": "Web Server",
         "description": "Serves HTTP/HTTPS requests and hosts web applications. Handles incoming client requests and serves responses.",
+        "technologies": {
+            "lightweight": ["Express.js", "Flask", "Sinatra", "Node.js", "FastAPI", "Django"],
+            "heavy": ["Nginx", "Apache", "AWS ALB", "Kubernetes Ingress", "HAProxy", "Traefik"]
+        },
         "use_cases": [
             "Hosting web applications and APIs",
             "Serving static content",
@@ -40,6 +44,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "database",
         "label": "Database",
         "description": "Stores and manages structured data persistently. Provides data persistence and query capabilities.",
+        "technologies": {
+            "lightweight": ["SQLite", "PostgreSQL (Single)", "MySQL (Single)", "MongoDB (Single)", "SQLite"],
+            "heavy": ["PostgreSQL Cluster", "MongoDB Sharded", "DynamoDB", "Cassandra", "CockroachDB", "AWS RDS Multi-AZ", "Azure Cosmos DB"]
+        },
         "use_cases": [
             "Storing application data",
             "User data and authentication",
@@ -51,6 +59,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "worker",
         "label": "Worker",
         "description": "Background processing service that handles asynchronous tasks and long-running operations.",
+        "technologies": {
+            "lightweight": ["Node.js Worker", "Python Worker", "Background Job Processor", "Celery (Single)"],
+            "heavy": ["Kubernetes Job", "AWS Lambda", "Celery Workers", "Sidekiq Workers", "Bull Queue Cluster"]
+        },
         "use_cases": [
             "Background job processing",
             "Image/video processing",
@@ -62,6 +74,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "cache",
         "label": "Cache",
         "description": "High-speed temporary storage for frequently accessed data to improve performance and reduce latency.",
+        "technologies": {
+            "lightweight": ["Redis (Single)", "In-Memory Cache", "Node Cache", "Memcached (Single)"],
+            "heavy": ["Redis Cluster", "Memcached Pool", "AWS ElastiCache", "Hazelcast", "Apache Ignite"]
+        },
         "use_cases": [
             "Caching database query results",
             "Session storage",
@@ -73,6 +89,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "queue",
         "label": "Queue",
         "description": "Message queue system that enables asynchronous communication and task distribution between services.",
+        "technologies": {
+            "lightweight": ["Redis Queue", "RabbitMQ (Single)", "Bull Queue", "Beanstalkd"],
+            "heavy": ["Kafka Cluster", "AWS SQS", "RabbitMQ Cluster", "Google Pub/Sub", "Azure Service Bus", "NATS"]
+        },
         "use_cases": [
             "Task queuing and processing",
             "Decoupling services",
@@ -84,6 +104,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "storage",
         "label": "Storage",
         "description": "Object storage or file storage system for storing files, media, and unstructured data.",
+        "technologies": {
+            "lightweight": ["Local Storage", "Simple S3 Bucket", "File System", "MinIO"],
+            "heavy": ["AWS S3", "Azure Blob Storage", "Google Cloud Storage", "Distributed File System", "Ceph"]
+        },
         "use_cases": [
             "File storage (images, documents)",
             "Object storage (S3-style)",
@@ -95,6 +119,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "third-party-api",
         "label": "Third-party API",
         "description": "External service or API that your system integrates with. Represents dependencies on external services.",
+        "technologies": {
+            "lightweight": ["Stripe API", "Twilio API", "SendGrid API", "Generic REST API"],
+            "heavy": ["Stripe Enterprise", "Twilio Enterprise", "SendGrid Enterprise", "AWS Marketplace APIs"]
+        },
         "use_cases": [
             "Payment processing APIs",
             "Authentication services (OAuth)",
@@ -106,6 +134,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "compute-node",
         "label": "Compute Node",
         "description": "Generic compute resource for processing tasks, running containers, or executing code.",
+        "technologies": {
+            "lightweight": ["Docker Container", "Simple VM", "Local Compute"],
+            "heavy": ["Kubernetes Node", "AWS ECS", "Azure Container Instances", "Google Cloud Run"]
+        },
         "use_cases": [
             "Container orchestration nodes",
             "Serverless function execution",
@@ -117,6 +149,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "load-balancer",
         "label": "Load Balancer",
         "description": "Distributes incoming network traffic across multiple servers to ensure high availability and performance.",
+        "technologies": {
+            "lightweight": ["Nginx (Basic)", "HAProxy (Basic)", "Simple Load Balancer"],
+            "heavy": ["AWS ALB", "AWS NLB", "Kubernetes Ingress", "HAProxy Enterprise", "F5 BIG-IP"]
+        },
         "use_cases": [
             "Distributing traffic across web servers",
             "High availability and redundancy",
@@ -128,6 +164,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "message-broker",
         "label": "Message Broker",
         "description": "Middleware that enables communication between distributed systems using publish-subscribe or message queue patterns.",
+        "technologies": {
+            "lightweight": ["Redis Pub/Sub", "Simple Event Bus", "RabbitMQ (Single)"],
+            "heavy": ["Apache Kafka", "AWS EventBridge", "RabbitMQ Cluster", "NATS", "Google Pub/Sub", "Azure Event Hubs"]
+        },
         "use_cases": [
             "Event-driven architectures",
             "Microservices communication",
@@ -139,6 +179,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "cdn",
         "label": "CDN",
         "description": "Content Delivery Network that caches and serves content from edge locations close to users for faster delivery.",
+        "technologies": {
+            "lightweight": ["Cloudflare Free", "Optional CDN"],
+            "heavy": ["AWS CloudFront", "Fastly", "Cloudflare Enterprise", "Akamai", "Azure CDN"]
+        },
         "use_cases": [
             "Serving static assets globally",
             "Reducing latency for users",
@@ -150,6 +194,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "monitoring",
         "label": "Monitoring Service",
         "description": "Service that collects metrics, logs, and traces to monitor system health, performance, and availability.",
+        "technologies": {
+            "lightweight": ["Basic Logging", "Console Logs", "Simple Metrics", "Winston", "Pino"],
+            "heavy": ["Prometheus + Grafana", "Datadog", "New Relic", "AWS CloudWatch", "Splunk", "Elastic Stack"]
+        },
         "use_cases": [
             "Application performance monitoring",
             "Infrastructure metrics",
@@ -161,6 +209,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "api-gateway",
         "label": "API Gateway",
         "description": "Single entry point for API requests that handles routing, authentication, rate limiting, and request/response transformation.",
+        "technologies": {
+            "lightweight": ["Express Gateway", "Kong (Basic)", "Simple API Router"],
+            "heavy": ["AWS API Gateway", "Kong Enterprise", "Azure API Management", "Apigee", "Tyk"]
+        },
         "use_cases": [
             "API request routing and load balancing",
             "Authentication and authorization",
@@ -172,6 +224,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "dns",
         "label": "DNS",
         "description": "Domain Name System service that translates domain names to IP addresses and manages DNS records.",
+        "technologies": {
+            "lightweight": ["Cloudflare DNS", "Simple DNS", "Route53 Basic"],
+            "heavy": ["AWS Route53", "Azure DNS", "Google Cloud DNS", "DNS Made Easy"]
+        },
         "use_cases": [
             "Domain name resolution",
             "Load balancing via DNS",
@@ -183,6 +239,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "vpc-network",
         "label": "VPC / Network",
         "description": "Virtual Private Cloud or network infrastructure that provides isolated network environments for resources.",
+        "technologies": {
+            "lightweight": ["Simple Network", "Local Network"],
+            "heavy": ["AWS VPC", "Azure Virtual Network", "Google Cloud VPC", "Multi-Region VPC"]
+        },
         "use_cases": [
             "Network isolation and security",
             "Private network segments",
@@ -194,6 +254,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "vpn-link",
         "label": "VPN / Private Link",
         "description": "Virtual Private Network or private link that provides secure, encrypted connections between networks or services.",
+        "technologies": {
+            "lightweight": ["OpenVPN", "WireGuard", "Simple VPN"],
+            "heavy": ["AWS VPN", "Azure VPN Gateway", "Google Cloud VPN", "AWS PrivateLink"]
+        },
         "use_cases": [
             "Secure remote access",
             "Site-to-site connectivity",
@@ -205,6 +269,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "auth-service",
         "label": "Auth Service",
         "description": "Authentication service that handles user login, session management, and authentication tokens.",
+        "technologies": {
+            "lightweight": ["JWT Auth", "Passport.js", "Simple Auth Service"],
+            "heavy": ["Auth0", "AWS Cognito", "Azure AD", "Okta", "Keycloak"]
+        },
         "use_cases": [
             "User authentication",
             "Session management",
@@ -216,6 +284,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "identity-provider",
         "label": "Identity Provider (IdP)",
         "description": "Identity provider that manages user identities and provides authentication services (e.g., OAuth, SAML).",
+        "technologies": {
+            "lightweight": ["OAuth 2.0", "Simple IdP", "Social Login"],
+            "heavy": ["Okta", "Azure AD", "Google Identity", "AWS SSO", "Ping Identity"]
+        },
         "use_cases": [
             "OAuth/OIDC authentication",
             "SAML-based SSO",
@@ -227,6 +299,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "secrets-manager",
         "label": "Secrets Manager",
         "description": "Service for securely storing and managing secrets, API keys, passwords, and certificates.",
+        "technologies": {
+            "lightweight": ["Environment Variables", "Simple Secrets", ".env files"],
+            "heavy": ["AWS Secrets Manager", "Azure Key Vault", "HashiCorp Vault", "Google Secret Manager"]
+        },
         "use_cases": [
             "API key management",
             "Password and credential storage",
@@ -238,6 +314,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "waf",
         "label": "Web Application Firewall",
         "description": "Security service that filters and monitors HTTP/HTTPS traffic to protect web applications from attacks.",
+        "technologies": {
+            "lightweight": ["Cloudflare WAF (Free)", "Basic Firewall"],
+            "heavy": ["AWS WAF", "Azure Application Gateway WAF", "Cloudflare Enterprise WAF", "F5 Advanced WAF"]
+        },
         "use_cases": [
             "SQL injection prevention",
             "XSS attack protection",
@@ -249,6 +329,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "search-engine",
         "label": "Search Engine",
         "description": "Search service that provides full-text search capabilities for applications and data.",
+        "technologies": {
+            "lightweight": ["Elasticsearch (Single)", "Simple Search", "PostgreSQL Full-Text"],
+            "heavy": ["Elasticsearch Cluster", "AWS OpenSearch", "Azure Cognitive Search", "Solr Cloud"]
+        },
         "use_cases": [
             "Full-text search",
             "Product search",
@@ -260,6 +344,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "data-warehouse",
         "label": "Data Warehouse",
         "description": "Centralized repository for storing and analyzing large volumes of structured data for business intelligence.",
+        "technologies": {
+            "lightweight": ["PostgreSQL (Analytics)", "Simple Data Warehouse"],
+            "heavy": ["Snowflake", "AWS Redshift", "Google BigQuery", "Azure Synapse", "Databricks"]
+        },
         "use_cases": [
             "Business intelligence and analytics",
             "Data aggregation and reporting",
@@ -271,6 +359,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "stream-processor",
         "label": "Stream Processor",
         "description": "Service that processes continuous streams of data in real-time for analytics and event processing.",
+        "technologies": {
+            "lightweight": ["Kafka Streams (Basic)", "Simple Stream Processor"],
+            "heavy": ["Apache Flink", "Apache Spark Streaming", "AWS Kinesis", "Google Cloud Dataflow"]
+        },
         "use_cases": [
             "Real-time data processing",
             "Event stream processing",
@@ -282,6 +374,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "etl-job",
         "label": "ETL / Batch Job",
         "description": "Extract, Transform, Load job that processes data in batches for data integration and transformation.",
+        "technologies": {
+            "lightweight": ["Python Script", "Simple ETL", "Cron Job"],
+            "heavy": ["Apache Airflow", "AWS Glue", "Azure Data Factory", "dbt", "Talend"]
+        },
         "use_cases": [
             "Data integration",
             "Batch data processing",
@@ -293,6 +389,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "scheduler",
         "label": "Scheduler / Cron",
         "description": "Service that schedules and executes tasks, jobs, or workflows at specified times or intervals.",
+        "technologies": {
+            "lightweight": ["Cron", "Node-cron", "Simple Scheduler"],
+            "heavy": ["AWS EventBridge", "Azure Scheduler", "Google Cloud Scheduler", "Quartz Scheduler"]
+        },
         "use_cases": [
             "Scheduled task execution",
             "Cron job management",
@@ -304,6 +404,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "serverless-function",
         "label": "Serverless Function",
         "description": "Event-driven compute service that runs code in response to events without managing servers.",
+        "technologies": {
+            "lightweight": ["Vercel Function", "Netlify Function", "Simple Lambda", "Cloudflare Workers"],
+            "heavy": ["AWS Lambda (Multi-Region)", "Azure Functions", "Google Cloud Functions", "AWS Step Functions"]
+        },
         "use_cases": [
             "Event-driven processing",
             "API endpoints",
@@ -315,6 +419,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "logging-service",
         "label": "Logging Service",
         "description": "Service that collects, stores, and analyzes application and system logs for debugging and monitoring.",
+        "technologies": {
+            "lightweight": ["Winston", "Pino", "Console Logs", "File Logging"],
+            "heavy": ["ELK Stack", "AWS CloudWatch Logs", "Azure Monitor", "Splunk", "Datadog Logs"]
+        },
         "use_cases": [
             "Centralized log collection",
             "Log aggregation and storage",
@@ -326,6 +434,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "alerting-service",
         "label": "Alerting / Incident Management",
         "description": "Service that monitors system health and sends alerts or manages incidents when issues are detected.",
+        "technologies": {
+            "lightweight": ["Email Alerts", "Simple Notifications"],
+            "heavy": ["PagerDuty", "Opsgenie", "VictorOps", "AWS SNS", "Datadog Alerts"]
+        },
         "use_cases": [
             "System health monitoring",
             "Alert notification",
@@ -337,6 +449,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "status-page",
         "label": "Status Page / Health Check",
         "description": "Public status page or health check service that displays system availability and service status.",
+        "technologies": {
+            "lightweight": ["Simple Status Page", "Health Check Endpoint"],
+            "heavy": ["Statuspage.io", "Atlassian Statuspage", "Cachet", "Uptime Robot"]
+        },
         "use_cases": [
             "Public service status",
             "Health check endpoints",
@@ -348,6 +464,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "orchestrator",
         "label": "Workflow Orchestrator",
         "description": "Service that orchestrates and manages complex workflows, pipelines, and multi-step processes.",
+        "technologies": {
+            "lightweight": ["Simple Workflow", "Basic Orchestrator"],
+            "heavy": ["Apache Airflow", "AWS Step Functions", "Temporal", "Conductor", "Prefect"]
+        },
         "use_cases": [
             "Workflow management",
             "Pipeline orchestration",
@@ -359,6 +479,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "notification-service",
         "label": "Notification Service",
         "description": "Service that sends notifications to users via various channels (push, in-app, etc.).",
+        "technologies": {
+            "lightweight": ["Simple Notifications", "Firebase Cloud Messaging (Basic)"],
+            "heavy": ["AWS SNS", "OneSignal", "Pusher", "Twilio Notify", "SendGrid Notifications"]
+        },
         "use_cases": [
             "Push notifications",
             "In-app notifications",
@@ -370,6 +494,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "email-service",
         "label": "Email Service",
         "description": "Service that handles email sending, receiving, and management for applications.",
+        "technologies": {
+            "lightweight": ["SendGrid", "Mailgun", "Simple SMTP"],
+            "heavy": ["AWS SES", "SendGrid Enterprise", "Mailgun Enterprise", "Postmark", "SparkPost"]
+        },
         "use_cases": [
             "Transactional emails",
             "Email marketing",
@@ -381,6 +509,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "webhook-endpoint",
         "label": "Webhook Endpoint",
         "description": "HTTP endpoint that receives webhook callbacks from external services for event-driven integrations.",
+        "technologies": {
+            "lightweight": ["Express.js Webhook", "Simple HTTP Endpoint"],
+            "heavy": ["AWS API Gateway Webhooks", "Zapier", "Microsoft Power Automate", "Webhook.site"]
+        },
         "use_cases": [
             "Third-party service callbacks",
             "Event-driven integrations",
@@ -392,6 +524,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "web-client",
         "label": "Web Client",
         "description": "Web browser or web application client that interacts with backend services.",
+        "technologies": {
+            "lightweight": ["React", "Vue.js", "Angular", "Vanilla JS"],
+            "heavy": ["React (SSR)", "Next.js", "Nuxt.js", "Angular Universal", "Progressive Web App"]
+        },
         "use_cases": [
             "Web application frontend",
             "Browser-based clients",
@@ -403,6 +539,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "mobile-app",
         "label": "Mobile App",
         "description": "Mobile application (iOS, Android) that interacts with backend services via APIs.",
+        "technologies": {
+            "lightweight": ["React Native", "Flutter", "Ionic"],
+            "heavy": ["Native iOS (Swift)", "Native Android (Kotlin)", "Flutter Enterprise", "React Native Enterprise"]
+        },
         "use_cases": [
             "Mobile application frontend",
             "Native mobile apps",
@@ -414,6 +554,10 @@ AVAILABLE_NODE_TYPES = [
         "id": "admin-panel",
         "label": "Admin Panel",
         "description": "Administrative interface for managing and configuring system components and settings.",
+        "technologies": {
+            "lightweight": ["React Admin", "Simple Dashboard", "Custom Admin UI"],
+            "heavy": ["Retool", "AdminJS", "Forest Admin", "Grafana", "Custom Enterprise Dashboard"]
+        },
         "use_cases": [
             "System administration",
             "Configuration management",
@@ -530,16 +674,171 @@ Current diagram JSON:
 Recent chat:
 {history_text}
 
-When the user sends an instruction, you should:
-1. Provide a friendly, conversational response explaining what you're doing
-2. Generate the necessary diagram operations to fulfill their request
+=== CRITICAL: EDITING EXISTING DIAGRAMS ===
+IMPORTANT: Before creating new nodes, ALWAYS check the "Current diagram JSON" above to see what already exists.
+
+When the user asks to EDIT, MODIFY, UPDATE, CHANGE, or REMOVE components:
+1. Look at the Current diagram JSON to find existing nodes by their "id" field
+2. Use "update_node" operation to modify existing nodes (change name, description, attributes)
+3. Use "delete_node" operation to remove existing nodes
+4. Use "delete_edge" operation to remove existing connections
+5. Only use "add_node" for components that don't already exist in the diagram
+6. When updating a node, use the EXACT same "id" from the existing diagram
+7. Preserve existing node IDs when possible - don't create duplicates
+
+When the user asks to ADD new components:
+- Use "add_node" for new components
+- Use "add_edge" for new connections
+
+Examples:
+- "Add a cache" → Use add_node (new component)
+- "Update the database" → Use update_node with existing database ID
+- "Remove the load balancer" → Use delete_node with existing load balancer ID
+- "Change the web server to use Express.js" → Use update_node with existing web server ID
+- "Edit the database description" → Use update_node with existing database ID
+
+=== INFRASTRUCTURE SCALE DETECTION ===
+You must analyze the user's request to determine the infrastructure scale:
+
+LIGHTWEIGHT / MVP / SMALL-SCALE indicators:
+- "Simple", "basic", "MVP", "prototype", "small", "startup", "personal project"
+- Low traffic expectations (< 1000 users)
+- Single developer or small team
+- Budget constraints mentioned
+- Rapid prototyping needs
+- Examples: "simple blog", "personal portfolio", "MVP for my app"
+
+HEAVY / ENTERPRISE / HIGH-SCALE indicators:
+- "Enterprise", "production", "high traffic", "millions of users", "global"
+- High availability requirements
+- Scalability concerns mentioned
+- Multi-region deployment
+- Complex requirements (microservices, distributed systems)
+- Examples: "enterprise SaaS", "global e-commerce platform", "high-traffic API"
+
+TECHNOLOGY SELECTION BY SCALE:
+
+LIGHTWEIGHT Infrastructure should use:
+- Simple web servers (Express.js, Flask, Sinatra)
+- SQLite or PostgreSQL (single instance)
+- Basic caching (in-memory or Redis single instance)
+- Simple queues (Redis lists, RabbitMQ single node)
+- Local file storage or simple S3
+- Minimal monitoring (basic logging)
+- Single region deployment
+- Fewer components overall
+
+HEAVY Infrastructure should use:
+- Load-balanced web servers (multiple instances)
+- Distributed databases (PostgreSQL clusters, MongoDB sharded, DynamoDB)
+- Distributed caching (Redis Cluster, Memcached pools)
+- Enterprise queues (Kafka, AWS SQS, RabbitMQ clusters)
+- Object storage (S3, Azure Blob, GCS) with CDN
+- Comprehensive monitoring (Prometheus, Datadog, New Relic)
+- Multi-region deployment with replication
+- API Gateways, Service Meshes, Circuit Breakers
+- Message brokers for event-driven architecture
+- Data warehouses for analytics
+- Multiple security layers (WAF, DDoS protection)
+
+=== TECHNOLOGY SELECTION GUIDELINES ===
+When creating nodes, you MUST include specific technology names in the "name" field and "attributes" field:
+
+WEB SERVERS (web-server):
+- Lightweight: "Express.js Server", "Flask API", "Sinatra App", "Node.js Server"
+- Heavy: "Nginx Load Balancer", "Apache HTTP Server", "AWS ALB", "Kubernetes Ingress"
+
+DATABASES (database):
+- Lightweight: "SQLite", "PostgreSQL (Single)", "MySQL (Single)", "MongoDB (Single)"
+- Heavy: "PostgreSQL Cluster", "MongoDB Sharded", "DynamoDB", "Cassandra", "CockroachDB", "AWS RDS Multi-AZ"
+
+CACHE (cache):
+- Lightweight: "Redis (Single)", "In-Memory Cache", "Node Cache"
+- Heavy: "Redis Cluster", "Memcached Pool", "AWS ElastiCache", "Hazelcast"
+
+QUEUES (queue):
+- Lightweight: "Redis Queue", "RabbitMQ (Single)", "Bull Queue"
+- Heavy: "Kafka Cluster", "AWS SQS", "RabbitMQ Cluster", "Google Pub/Sub", "Azure Service Bus"
+
+STORAGE (storage):
+- Lightweight: "Local Storage", "Simple S3 Bucket", "File System"
+- Heavy: "AWS S3", "Azure Blob Storage", "Google Cloud Storage", "Distributed File System"
+
+MESSAGE BROKERS (message-broker):
+- Lightweight: "Redis Pub/Sub", "Simple Event Bus"
+- Heavy: "Apache Kafka", "AWS EventBridge", "RabbitMQ Cluster", "NATS", "Google Pub/Sub"
+
+MONITORING (monitoring):
+- Lightweight: "Basic Logging", "Console Logs", "Simple Metrics"
+- Heavy: "Prometheus + Grafana", "Datadog", "New Relic", "AWS CloudWatch", "Splunk"
+
+CDN (cdn):
+- Lightweight: Optional, or "Cloudflare Free"
+- Heavy: "AWS CloudFront", "Fastly", "Cloudflare Enterprise", "Akamai"
+
+API GATEWAY (api-gateway):
+- Lightweight: "Express Gateway", "Kong (Basic)"
+- Heavy: "AWS API Gateway", "Kong Enterprise", "Azure API Management", "Apigee"
+
+WORKERS (worker):
+- Lightweight: "Node.js Worker", "Python Worker", "Background Job Processor"
+- Heavy: "Kubernetes Job", "AWS Lambda", "Celery Workers", "Sidekiq Workers"
+
+SERVERLESS (serverless-function):
+- Lightweight: "Vercel Function", "Netlify Function", "Simple Lambda"
+- Heavy: "AWS Lambda (Multi-Region)", "Azure Functions", "Google Cloud Functions"
+
+When specifying technologies, include them in the node's "data.name" field and add a "technology" attribute:
+{{
+  "name": "Express.js API Server",
+  "description": "Handles HTTP requests and serves the REST API",
+  "attributes": {{
+    "technology": "Express.js",
+    "framework": "Node.js",
+    "language": "JavaScript"
+  }}
+}}
+
+=== NODE DESCRIPTION REQUIREMENTS ===
+EVERY node you create MUST include a concise "description" field in the "data" object that explains:
+1. What the component does
+2. Its role in the architecture
+
+Description format:
+- Start with the component's primary function
+- Keep it brief (1-2 sentences maximum)
+- Include scale-appropriate details if relevant
+
+CRITICAL: Never create a node without a description. The description should be 1-2 sentences explaining the component's purpose and role.
+
+=== SCALE DETECTION PROCESS ===
+1. Read the user's message carefully
+2. Look for explicit scale indicators (see INFRASTRUCTURE SCALE DETECTION above)
+3. If scale is ambiguous, ask clarifying questions OR default to lightweight for simplicity
+4. Once scale is determined, apply the appropriate technology selection rules
+5. Mention the detected scale in your response message
+
+Example responses:
+- "I'm creating a lightweight MVP architecture using simple, cost-effective components..."
+- "I'm setting up an enterprise-scale system with high availability and distributed components..."
+
+=== WHEN THE USER SENDS AN INSTRUCTION ===
+You should:
+1. FIRST: Check the Current diagram JSON to see what nodes and edges already exist
+2. Determine if the request is to EDIT existing components or ADD new ones
+3. If editing: Use update_node/delete_node operations with existing node IDs from the diagram
+4. If adding: Use add_node operations for new components
+5. Analyze the infrastructure scale (lightweight vs. heavy) based on the user's request
+6. Select appropriate technologies based on the scale
+7. Provide a friendly, conversational response explaining what you're doing
+8. Generate the necessary diagram operations with detailed descriptions for all nodes
 
 You MUST respond with a JSON object in this exact format:
 {{
-  "message": "A friendly, conversational explanation of what you're doing. Be helpful and clear. Describe what components you're adding, removing, or modifying.",
+  "message": "A friendly, conversational explanation of what you're doing. Be helpful and clear. Describe what components you're adding, removing, or modifying, and mention the infrastructure scale you've detected (e.g., 'I'm creating a lightweight MVP architecture' or 'I'm setting up an enterprise-scale system').",
   "operations": [
-    {{"op": "add_node", "payload": {{"id": "web-server-1", "type": "web-server", "position": {{"x": 400, "y": 100}}, "data": {{"name": "API Server"}}}}, "metadata": {{"x": 400, "y": 100}}}},
-    {{"op": "add_node", "payload": {{"id": "database-1", "type": "database", "position": {{"x": 400, "y": 300}}, "data": {{"name": "PostgreSQL"}}}}, "metadata": {{"x": 400, "y": 300}}}},
+    {{"op": "add_node", "payload": {{"id": "web-server-1", "type": "web-server", "position": {{"x": 400, "y": 100}}, "data": {{"name": "Express.js API Server", "description": "Main API endpoint handling HTTP requests and serving JSON responses. Suitable for MVP deployments.", "attributes": {{"technology": "Express.js", "framework": "Node.js"}}}}}}, "metadata": {{"x": 400, "y": 100}}}},
+    {{"op": "add_node", "payload": {{"id": "database-1", "type": "database", "position": {{"x": 400, "y": 300}}, "data": {{"name": "PostgreSQL (Single)", "description": "Stores application data with ACID transactions. Single-instance database for MVP deployments.", "attributes": {{"technology": "PostgreSQL"}}}}}}, "metadata": {{"x": 400, "y": 300}}}},
     {{"op": "add_edge", "payload": {{"source": "web-server-1", "target": "database-1"}}}}
   ]
 }}
@@ -555,13 +854,13 @@ IMPORTANT: When positioning nodes, use appropriate spacing:
   - Row 3: (100, 600), (350, 600), (600, 600), (850, 600)
 
 Available operations:
-- "add_node": {{"op": "add_node", "payload": {{"id": string (REQUIRED - use a descriptive ID like "web-server-1", "database-1", etc.), "type": string, "position": {{"x": number, "y": number}}, "data": {{"name": string, "description": string, "attributes": object}}}}, "metadata": {{"x": number, "y": number}}}}
-- "update_node": {{"op": "update_node", "payload": {{"id": string, "data": {{"name": string, "description": string, "attributes": object}}}}}}
-- "delete_node": {{"op": "delete_node", "payload": {{"id": string}}}}
-- "add_edge": {{"op": "add_edge", "payload": {{"source": string (MUST match a node ID from an add_node operation), "target": string (MUST match a node ID from an add_node operation), "type": string (optional)}}}}
-- "delete_edge": {{"op": "delete_edge", "payload": {{"id": string}}}}
+- "add_node": {{"op": "add_node", "payload": {{"id": string (REQUIRED - use a descriptive ID like "web-server-1", "database-1", etc.), "type": string, "position": {{"x": number, "y": number}}, "data": {{"name": string (MUST include technology name), "description": string (REQUIRED - 1-2 sentences), "attributes": object (MUST include technology information)}}}}, "metadata": {{"x": number, "y": number}}}} - USE ONLY for NEW components that don't exist in Current diagram JSON
+- "update_node": {{"op": "update_node", "payload": {{"id": string (MUST match existing node ID from Current diagram JSON), "data": {{"name": string, "description": string, "attributes": object}}}}}} - USE for modifying existing nodes (edit name, description, attributes)
+- "delete_node": {{"op": "delete_node", "payload": {{"id": string (MUST match existing node ID from Current diagram JSON)}}}} - USE for removing existing nodes
+- "add_edge": {{"op": "add_edge", "payload": {{"source": string (MUST match a node ID from Current diagram JSON or a new add_node operation), "target": string (MUST match a node ID from Current diagram JSON or a new add_node operation), "type": string (optional)}}}} - USE for new connections
+- "delete_edge": {{"op": "delete_edge", "payload": {{"id": string (MUST match existing edge ID from Current diagram JSON)}}}} - USE for removing existing connections
 
-Available node types: web-server, database, worker, cache, queue, storage, third-party-api, compute-node, load-balancer, message-broker, cdn, monitoring
+Available node types: web-server, database, worker, cache, queue, storage, third-party-api, compute-node, load-balancer, message-broker, cdn, monitoring, api-gateway, dns, vpc-network, vpn-link, auth-service, identity-provider, secrets-manager, waf, search-engine, data-warehouse, stream-processor, etl-job, scheduler, serverless-function, logging-service, alerting-service, status-page, orchestrator, notification-service, email-service, webhook-endpoint, web-client, mobile-app, admin-panel
 
 CRITICAL RULES FOR POSITIONING NODES:
 1. Position nodes in a HIERARCHICAL layout: vertical flow overall, but horizontal arrangement for nodes at the same level
@@ -583,6 +882,8 @@ IMPORTANT:
 - If the user asks a question or needs help (not a diagram modification), respond with a helpful message and an empty operations array: {{"message": "...", "operations": []}}
 - Return ONLY valid JSON. Do NOT wrap it in markdown code blocks (```json or ```).
 - Do NOT include any text outside the JSON object.
+- EVERY node MUST have a "description" field with 1-2 sentences explaining its role.
+- EVERY node MUST include technology information in the "name" and "attributes" fields.
 """
 
         # 4) Call Gemini API
