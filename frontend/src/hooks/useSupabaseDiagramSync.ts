@@ -36,13 +36,13 @@ export function useSupabaseDiagramSync(projectId: string | null) {
 
     const client = supabaseClient;
 
-    try {
+      try {
       isSavingRef.current = true;
       setSaveStatus("saving");
       setSaveError(null);
 
-      const project = getProject();
-      const payload = JSON.stringify(project);
+        const project = getProject();
+        const payload = JSON.stringify(project);
 
       // Check if payload actually changed - if same, skip save but keep status
       if (payload === lastPayloadRef.current && lastPayloadRef.current !== null) {
@@ -52,47 +52,47 @@ export function useSupabaseDiagramSync(projectId: string | null) {
       }
 
       // Update last payload before saving
-      lastPayloadRef.current = payload;
+        lastPayloadRef.current = payload;
 
-      // Get the current project data from database to check for name
-      let projectName = project.name;
-      if (!projectName) {
-        try {
-          const { data } = await client
-            .from("projects")
-            .select("name, diagram_json")
+        // Get the current project data from database to check for name
+        let projectName = project.name;
+        if (!projectName) {
+          try {
+            const { data } = await client
+              .from("projects")
+              .select("name, diagram_json")
             .eq("id", currentProjectId)
-            .single();
-          
-          // Prefer name from diagram_json if it exists, otherwise use database name column
-          if (data?.diagram_json?.name) {
-            projectName = data.diagram_json.name;
-          } else if (data?.name) {
-            projectName = data.name;
-          } else {
-            projectName = "Untitled Project";
-          }
+              .single();
+            
+            // Prefer name from diagram_json if it exists, otherwise use database name column
+            if (data?.diagram_json?.name) {
+              projectName = data.diagram_json.name;
+            } else if (data?.name) {
+              projectName = data.name;
+            } else {
+              projectName = "Untitled Project";
+            }
         } catch (error) {
           console.warn("Failed to fetch project name, using default:", error);
-          projectName = "Untitled Project";
+            projectName = "Untitled Project";
+          }
         }
-      }
 
-      // Ensure the name is also in the diagram_json
-      const projectWithName = {
-        ...project,
-        name: projectName
-      };
+        // Ensure the name is also in the diagram_json
+        const projectWithName = {
+          ...project,
+          name: projectName
+        };
 
       // Save to Supabase
       console.log(`💾 Saving project ${currentProjectId} to Supabase...`);
       const { data, error: updateError } = await client
-        .from("projects")
-        .update({
-          name: projectName,
-          diagram_json: projectWithName,
-          updated_at: new Date().toISOString(),
-        })
+          .from("projects")
+          .update({
+            name: projectName,
+            diagram_json: projectWithName,
+            updated_at: new Date().toISOString(),
+          })
         .eq("id", currentProjectId)
         .select();
 
@@ -109,8 +109,8 @@ export function useSupabaseDiagramSync(projectId: string | null) {
 
       setSaveStatus("saved");
       setSaveError(null);
-    } catch (error) {
-      console.error("Failed to sync to Supabase:", error);
+      } catch (error) {
+        console.error("Failed to sync to Supabase:", error);
       setSaveStatus("error");
       setSaveError(error instanceof Error ? error.message : "Failed to save");
       // Reset lastPayloadRef on error so we can retry

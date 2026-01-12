@@ -1103,7 +1103,7 @@ IMPORTANT:
             # Validate that the project exists in Supabase before saving messages
             # This ensures we're using the correct project_id
             try:
-                project_check = supabase.table("projects").select("id").eq("id", req.projectId).single().execute()
+            project_check = supabase.table("projects").select("id").eq("id", req.projectId).single().execute()
             except APIError as api_err:
                 error_dict = api_err.args[0] if api_err.args and isinstance(api_err.args[0], dict) else {}
                 error_msg = error_dict.get('message', str(api_err))
@@ -1122,19 +1122,19 @@ IMPORTANT:
                     print(f"⚠️  Using validated project ID: {validated_project_id}")
                 
                 try:
-                    result = supabase.table("chat_messages").insert([
-                        {
-                            "project_id": validated_project_id,
-                            "role": "user",
-                            "content": req.message,
-                        },
-                        {
-                            "project_id": validated_project_id,
-                            "role": "assistant",
-                            "content": assistant_message,
-                        },
-                    ]).execute()
-                    
+                result = supabase.table("chat_messages").insert([
+                    {
+                        "project_id": validated_project_id,
+                        "role": "user",
+                        "content": req.message,
+                    },
+                    {
+                        "project_id": validated_project_id,
+                        "role": "assistant",
+                        "content": assistant_message,
+                    },
+                ]).execute()
+                
                     # Check for errors explicitly (CRITICAL FIX)
                     if hasattr(result, 'error') and result.error:
                         error_obj = result.error
@@ -1149,20 +1149,20 @@ IMPORTANT:
                         print(f"   Verify service role key is configured correctly in backend/.env")
                     elif result.data:
                         print(f"✅ Successfully saved {len(result.data)} chat messages for project {validated_project_id}")
-                        # Verify both messages were saved with the same project_id
-                        if len(result.data) == 2:
-                            user_msg_project_id = result.data[0].get("project_id")
-                            assistant_msg_project_id = result.data[1].get("project_id")
-                            if user_msg_project_id != assistant_msg_project_id:
-                                print(f"❌ ERROR: Project ID mismatch in saved messages!")
-                                print(f"   User message project_id: {user_msg_project_id}")
-                                print(f"   Assistant message project_id: {assistant_msg_project_id}")
-                            elif user_msg_project_id != validated_project_id:
-                                print(f"❌ ERROR: Saved messages have wrong project_id!")
-                                print(f"   Expected: {validated_project_id}")
-                                print(f"   Got: {user_msg_project_id}")
-                    else:
-                        print(f"⚠️  Chat messages insert returned no data for project {validated_project_id}")
+                    # Verify both messages were saved with the same project_id
+                    if len(result.data) == 2:
+                        user_msg_project_id = result.data[0].get("project_id")
+                        assistant_msg_project_id = result.data[1].get("project_id")
+                        if user_msg_project_id != assistant_msg_project_id:
+                            print(f"❌ ERROR: Project ID mismatch in saved messages!")
+                            print(f"   User message project_id: {user_msg_project_id}")
+                            print(f"   Assistant message project_id: {assistant_msg_project_id}")
+                        elif user_msg_project_id != validated_project_id:
+                            print(f"❌ ERROR: Saved messages have wrong project_id!")
+                            print(f"   Expected: {validated_project_id}")
+                            print(f"   Got: {user_msg_project_id}")
+                else:
+                    print(f"⚠️  Chat messages insert returned no data for project {validated_project_id}")
                         print(f"   No error was reported, but no data was returned.")
                         print(f"   This may indicate a silent failure. Check Supabase logs.")
                         
